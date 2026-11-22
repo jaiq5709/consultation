@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BYD 충전비 계산기</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg-page: #f4f5f7;
+      --bg-card-left: #ffffff;
+      --bg-card-right: #0f1c2e;
+      --bg-badge: #1d2d44;
+      --text-main: #111827;
+      --text-sub: #6b7280;
+      --border-color: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    /* 메인 컨테이너 (계산기) */
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 64px 24px 80px;
+    }
+
+    .page-header {
+      margin-bottom: 36px;
+    }
+
+    .en-sub {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #2c4a6f;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .page-header h1 {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .page-header p {
+      font-size: 15px;
+      color: var(--text-sub);
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .card-left {
+      background: var(--bg-card-left);
+      padding: 40px;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+    }
+
+    .card-left h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 28px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .label-row .unit {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-sub);
+    }
+
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 15px;
+      font-family: inherit;
+      color: #111827;
+      background-color: #ffffff;
+      border: 1px solid #d1d5db;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="number"]:focus,
+    select:focus {
+      border-color: #0f1c2e;
+    }
+
+    .help-text {
+      font-size: 12px;
+      color: var(--text-sub);
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+
+    .divider {
+      height: 1px;
+      background-color: var(--border-color);
+      margin: 32px 0 24px;
+    }
+
+    .gas-section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .gas-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .btn-reset {
+      margin-top: 12px;
+      width: 100%;
+      padding: 12px;
+      background-color: #f9fafb;
+      border: 1px solid #d1d5db;
+      border-radius: 2px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn-reset:hover {
+      background-color: #f3f4f6;
+    }
+
+    .card-right {
+      background: var(--bg-card-right);
+      color: #ffffff;
+      padding: 44px 40px;
+      border-radius: 4px;
+      position: sticky;
+      top: 40px;
+    }
+
+    .estimate-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #9ca3af;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .estimate-label {
+      font-size: 15px;
+      color: #d1d5db;
+      margin-bottom: 6px;
+    }
+
+    .estimate-price {
+      font-size: 46px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 24px;
+    }
+
+    .savings-box {
+      background-color: var(--bg-badge);
+      padding: 16px 20px;
+      border-radius: 2px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #e5e7eb;
+      margin-bottom: 32px;
+    }
+
+    .detail-list {
+      list-style: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      margin-bottom: 32px;
+    }
+
+    .detail-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 14px;
+    }
+
+    .detail-list .d-label {
+      color: #9ca3af;
+    }
+
+    .detail-list .d-value {
+      font-weight: 700;
+      font-size: 15px;
+      color: #ffffff;
+    }
+
+    .applied-info-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #d1d5db;
+      margin-bottom: 8px;
+    }
+
+    .applied-info-desc {
+      font-size: 13px;
+      color: #9ca3af;
+      line-height: 1.6;
+    }
+
+    .notice-section {
+      margin-top: 56px;
+      padding-top: 32px;
+      border-top: 1px solid #d1d5db;
+    }
+
+    .notice-section h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #1f2937;
+    }
+
+    .notice-section p {
+      font-size: 13px;
+      color: var(--text-sub);
+      margin-bottom: 6px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 860px) {
+      .calc-grid {
+        grid-template-columns: 1fr;
+      }
+      .container {
+        padding: 40px 20px 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="container">
+    <div class="page-header">
+      <div class="en-sub">CHARGING COST CALCULATOR</div>
+      <h1>일상의 주행, 충전비는 얼마나 들까요?</h1>
+      <p>나의 주행거리와 충전 환경으로 예상 비용을 비교해 보세요.</p>
+    </div>
+
+    <div class="calc-grid">
+      <section class="card-left">
+        <h2>나의 이용 조건</h2>
+
+        <div class="form-group">
+          <div class="label-row">
+            <span>월 예상 주행거리</span>
+            <span class="unit">km</span>
+          </div>
+          <input type="number" id="monthlyKm" value="1000" min="0" step="100">
+        </div>
+
+        <div class="form-group">
+          <div class="label-row">
+            <span>구매 고려 차량</span>
+          </div>
+          <select id="carModel">
+            <option value="DOLPHIN STANDARD">DOLPHIN STANDARD</option>
+            <option value="DOLPHIN ACTIVE">DOLPHIN ACTIVE</option>
+            <option value="ATTO 3">ATTO 3</option>
+            <option value="SEAL RWD">SEAL RWD</option>
+            <option value="SEAL AWD">SEAL AWD</option>
+            <option value="SEALION 7 RWD">SEALION 7 RWD</option>
+            <option value="SEALION 7 AWD">SEALION 7 AWD</option>
+            <option value="SEALION 6 FWD">SEALION 6 FWD</option>
+            <option value="SEALION 6 AWD">SEALION 6 AWD</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <div class="label-row">
+            <span>주 이용 충전기 회사</span>
+          </div>
+          <select id="chargerCompany">
+            <option value="파워큐브코리아">파워큐브코리아</option>
+            <option value="(주)이앤에이치에너지">(주)이앤에이치에너지</option>
+            <option value="GS차지비">GS차지비</option>
+            <option value="KEVIT">KEVIT</option>
+            <option value="LG유플러스 볼트업">LG유플러스 볼트업</option>
+            <option value="NICE인프라㈜">NICE인프라㈜</option>
+            <option value="SG생활안전">SG생활안전</option>
+            <option value="SK일렉링크">SK일렉링크</option>
+            <option value="레드이엔지">레드이엔지</option>
+            <option value="블루네트웍스">블루네트웍스</option>
+            <option value="신세계아이앤씨">신세계아이앤씨</option>
+            <option value="에버온">에버온</option>
+            <option value="이브이시스">이브이시스</option>
+            <option value="채비">채비</option>
+            <option value="한국전기차충전서비스">한국전기차충전서비스</option>
+            <option value="한국전력공사">한국전력공사</option>
+            <option value="환경부">환경부</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <div class="label-row">
+            <span>1회 충전 목표</span>
+          </div>
+          <select id="chargeTarget">
+            <option value="0.8_slow">20% ➔ 100% (완속)</option>
+            <option value="0.6_fast">20% ➔ 80% (급속)</option>
+            <option value="0.4_fast">40% ➔ 80% (급속)</option>
+            <option value="0.6_slow">40% ➔ 100% (완속)</option>
+            <option value="0.5_slow">50% ➔ 100% (완속)</option>
+            <option value="0.3_slow">70% ➔ 100% (완속)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <div class="label-row">
+            <span>적용 충전 단가</span>
+            <span class="unit">원/kWh · 직접 수정 가능</span>
+          </div>
+          <input type="number" id="unitPrice" value="168" min="0" step="1">
+          <p class="help-text">업체·충전 방식을 바꾸면 기준 단가로 초기화됩니다. 실제 이용 요금에 맞춰 수정해 주세요.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="gas-section-header">
+          <span>가솔린 비교 조건</span>
+          <span>−</span>
+        </div>
+
+        <div class="gas-grid">
+          <div class="form-group">
+            <div class="label-row">
+              <span>휘발유 단가</span>
+              <span class="unit">원/L</span>
+            </div>
+            <input type="number" id="gasPrice" value="1885" min="0" step="10">
+          </div>
+
+          <div class="form-group">
+            <div class="label-row">
+              <span>가솔린 차량 연비</span>
+              <span class="unit">km/L</span>
+            </div>
+            <input type="number" id="gasEff" value="12" min="1" step="0.5">
+          </div>
+        </div>
+
+        <button type="button" class="btn-reset" id="resetBtn">기본값으로 초기화 ↻</button>
+      </section>
+
+      <section class="card-right">
+        <div class="estimate-tag">YOUR MONTHLY ESTIMATE</div>
+        <div class="estimate-label">월 예상 충전 요금</div>
+        <div class="estimate-price" id="resMonthlyCost">30,545원</div>
+
+        <div class="savings-box" id="resSavings">
+          가솔린 대비 월 126,538원 절감 예상
+        </div>
+
+        <ul class="detail-list">
+          <li>
+            <span class="d-label">가솔린 월 예상 유류비</span>
+            <span class="d-value" id="resGasCost">157,083원</span>
+          </li>
+          <li>
+            <span class="d-label">월 충전 횟수</span>
+            <span class="d-value" id="resChargeCount">약 4.6회</span>
+          </li>
+          <li>
+            <span class="d-label">1회 충전 시간 · 이론값</span>
+            <span class="d-value" id="resChargeTime">약 5시간 42분</span>
+          </li>
+          <li>
+            <span class="d-label">1회 충전 요금</span>
+            <span class="d-value" id="resSingleCost">6,709원</span>
+          </li>
+        </ul>
+
+        <div class="applied-info-title">적용된 차량 정보</div>
+        <div class="applied-info-desc" id="resCarSpec">
+          DOLPHIN STANDARD · 배터리 49.92 kWh · 복합 전비 5.5 km/kWh · 완속 7 kW · 1회 39.94 kWh
+        </div>
+      </section>
+    </div>
+
+    <div class="notice-section">
+      <h3>계산 기준을 확인해 주세요.</h3>
+      <p>차량 정보와 업체별 단가는 기본 설정된 기준값이며 실시간 요금이 아닙니다. 회원·로밍·충전소별 요금 및 할인에 따라 실제 비용이 달라집니다.</p>
+      <p>월 충전비 = 월 주행거리 ÷ 복합 전비 × 충전 단가. 월 충전 횟수는 계산상 평균이며, 충전 시간은 배터리 충전량 ÷ 차량 수용 출력으로 계산한 이론값입니다. 실제 충전 속도는 잔량, 온도와 충전기 출력에 따라 달라집니다.</p>
+      <p>전비에는 공인 측정 조건이 반영되어 있으며 별도 손실률은 추가하지 않았습니다. 계절·주행 습관에 따른 실사용 차이는 반영하지 않습니다.</p>
+    </div>
+  </main>
+
+  <script>
+    const carSpecs = {
+      "DOLPHIN STANDARD": { battery: 49.92, eff: 5.5, slowKw: 7, fastKw: 60 },
+      "DOLPHIN ACTIVE":   { battery: 60.48, eff: 5.0, slowKw: 7, fastKw: 88 },
+      "ATTO 3":           { battery: 60.48, eff: 4.7, slowKw: 7, fastKw: 88 },
+      "SEAL RWD":         { battery: 82.56, eff: 5.0, slowKw: 11, fastKw: 150 },
+      "SEAL AWD":         { battery: 82.56, eff: 4.2, slowKw: 11, fastKw: 150 },
+      "SEALION 7 RWD":    { battery: 82.56, eff: 4.5, slowKw: 11, fastKw: 150 },
+      "SEALION 7 AWD":    { battery: 82.56, eff: 4.3, slowKw: 11, fastKw: 150 },
+      "SEALION 6 FWD":    { battery: 18.30, eff: 4.8, slowKw: 7, fastKw: 18 },
+      "SEALION 6 AWD":    { battery: 18.30, eff: 4.4, slowKw: 7, fastKw: 18 }
+    };
+
+    const companyRates = {
+      "파워큐브코리아":         { slow: 168, fast: 320 },
+      "(주)이앤에이치에너지":   { slow: 240, fast: 330 },
+      "GS차지비":               { slow: 269, fast: 330 },
+      "KEVIT":                  { slow: 260, fast: 340 },
+      "LG유플러스 볼트업":      { slow: 255, fast: 324 },
+      "NICE인프라㈜":           { slow: 250, fast: 330 },
+      "SG생활안전":             { slow: 245, fast: 325 },
+      "SK일렉링크":             { slow: 268, fast: 345 },
+      "레드이엔지":             { slow: 230, fast: 320 },
+      "블루네트웍스":           { slow: 250, fast: 330 },
+      "신세계아이앤씨":         { slow: 265, fast: 340 },
+      "에버온":                 { slow: 259, fast: 335 },
+      "이브이시스":             { slow: 265, fast: 340 },
+      "채비":                   { slow: 260, fast: 340 },
+      "한국전기차충전서비스":   { slow: 275, fast: 345 },
+      "한국전력공사":           { slow: 288, fast: 324 },
+      "환경부":                 { slow: 324, fast: 347 }
+    };
+
+    const elMonthlyKm = document.getElementById('monthlyKm');
+    const elCarModel = document.getElementById('carModel');
+    const elCompany = document.getElementById('chargerCompany');
+    const elTarget = document.getElementById('chargeTarget');
+    const elUnitPrice = document.getElementById('unitPrice');
+    const elGasPrice = document.getElementById('gasPrice');
+    const elGasEff = document.getElementById('gasEff');
+    const elResetBtn = document.getElementById('resetBtn');
+
+    function updateDefaultUnitPrice() {
+      const company = elCompany.value;
+      const targetVal = elTarget.value;
+      const isFast = targetVal.includes('fast');
+      if (companyRates[company]) {
+        elUnitPrice.value = isFast ? companyRates[company].fast : companyRates[company].slow;
+      }
+      calculate();
+    }
+
+    function calculate() {
+      const km = parseFloat(elMonthlyKm.value) || 0;
+      const modelName = elCarModel.value;
+      const spec = carSpecs[modelName];
+      const [ratioStr, speedType] = elTarget.value.split('_');
+      const chargeRatio = parseFloat(ratioStr);
+      const isFast = speedType === 'fast';
+      const unitPrice = parseFloat(elUnitPrice.value) || 0;
+      const gasPrice = parseFloat(elGasPrice.value) || 0;
+      const gasEff = parseFloat(elGasEff.value) || 1;
+
+      const monthlyKwh = km / spec.eff;
+      const monthlyChargeCost = Math.round(monthlyKwh * unitPrice);
+
+      const monthlyGasCost = Math.round((km / gasEff) * gasPrice);
+      const savings = monthlyGasCost - monthlyChargeCost;
+
+      const singleChargeKwh = spec.battery * chargeRatio;
+      const chargeCount = singleChargeKwh > 0 ? (monthlyKwh / singleChargeKwh) : 0;
+
+      const chargerKw = isFast ? spec.fastKw : spec.slowKw;
+      const hoursFloat = singleChargeKwh / chargerKw;
+      const totalMinutes = Math.round(hoursFloat * 60);
+      const hours = Math.floor(totalMinutes / 60);
+      const minutes = totalMinutes % 60;
+
+      const singleChargeKwhRounded = Math.round(singleChargeKwh * 100) / 100;
+      const singleCost = Math.round(singleChargeKwhRounded * unitPrice);
+
+      document.getElementById('resMonthlyCost').textContent = monthlyChargeCost.toLocaleString() + '원';
+      
+      if (savings >= 0) {
+        document.getElementById('resSavings').textContent = `가솔린 대비 월 ${savings.toLocaleString()}원 절감 예상`;
+      } else {
+        document.getElementById('resSavings').textContent = `가솔린 대비 월 ${Math.abs(savings).toLocaleString()}원 추가 발생`;
+      }
+
+      document.getElementById('resGasCost').textContent = monthlyGasCost.toLocaleString() + '원';
+      document.getElementById('resChargeCount').textContent = `약 ${chargeCount.toFixed(1)}회`;
+      
+      const timeText = hours > 0 ? `약 ${hours}시간 ${minutes}분` : `약 ${minutes}분`;
+      document.getElementById('resChargeTime').textContent = timeText;
+      document.getElementById('resSingleCost').textContent = singleCost.toLocaleString() + '원';
+
+      const speedLabel = isFast ? `급속 ${spec.fastKw} kW` : `완속 ${spec.slowKw} kW`;
+      document.getElementById('resCarSpec').textContent = 
+        `${modelName} · 배터리 ${spec.battery} kWh · 복합 전비 ${spec.eff} km/kWh · ${speedLabel} · 1회 ${singleChargeKwhRounded.toFixed(2)} kWh`;
+    }
+
+    elMonthlyKm.addEventListener('input', calculate);
+    elCarModel.addEventListener('change', calculate);
+    elCompany.addEventListener('change', updateDefaultUnitPrice);
+    elTarget.addEventListener('change', updateDefaultUnitPrice);
+    elUnitPrice.addEventListener('input', calculate);
+    elGasPrice.addEventListener('input', calculate);
+    elGasEff.addEventListener('input', calculate);
+
+    elResetBtn.addEventListener('click', () => {
+      elMonthlyKm.value = 1000;
+      elCarModel.value = "DOLPHIN STANDARD";
+      elCompany.value = "파워큐브코리아";
+      elTarget.value = "0.8_slow";
+      elUnitPrice.value = 168;
+      elGasPrice.value = 1885;
+      elGasEff.value = 12;
+      calculate();
+    });
+
+    calculate();
+  </script>
+</body>
+</html>

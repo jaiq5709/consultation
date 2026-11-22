@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BYD 모델 상세 안내</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --surface: #181c23;
+      --surface-hover: #212733;
+      --border: #2a3140;
+      --text: #f3f5f8;
+      --muted: #9aa4b2;
+      --accent: #3b82f6;
+      --accent-soft: rgba(59, 130, 246, 0.14);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* 상단 네비게이션 */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(15, 17, 21, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-wrap {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+    .brand span {
+      font-weight: 400;
+      font-size: 0.85rem;
+      color: var(--muted);
+      letter-spacing: 0;
+      margin-left: 6px;
+    }
+    nav {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    nav a {
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      transition: 0.18s;
+    }
+    nav a:hover {
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    main {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 28px 20px 80px;
+    }
+
+    /* 모델 전환 탭 */
+    .tab-bar {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin-bottom: 28px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tab-btn {
+      flex: 0 0 auto;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+    .tab-btn.active,
+    .tab-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* 상단 히어로 */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 28px;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 780px) {
+      .hero { grid-template-columns: 1fr; }
+    }
+    .hero-img {
+      aspect-ratio: 16 / 10;
+      background: #12151b;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+    .hero-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-soft);
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+    .en-name {
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .summary {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 18px;
+    }
+    .price-box {
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 18px;
+    }
+    .price-box span {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .price-box strong {
+      font-size: 1.35rem;
+      color: var(--text);
+    }
+    .cta-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      flex: 1;
+      min-width: 130px;
+      text-align: center;
+      padding: 11px 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: 0.18s;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { opacity: 0.9; }
+    .btn-sub {
+      background: var(--surface-hover);
+      border: 1px solid var(--border);
+    }
+    .btn-sub:hover { border-color: var(--text); }
+
+    /* 핵심 수치 카드 */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+    }
+    .kpi-card span {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .kpi-card strong {
+      font-size: 1.15rem;
+    }
+
+    /* 제원 및 특징 섹션 */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 780px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+    }
+    .panel h2 {
+      font-size: 1.12rem;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .spec-list {
+      list-style: none;
+    }
+    .spec-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(42, 49, 64, 0.55);
+      font-size: 0.92rem;
+    }
+    .spec-list li:last-child { border-bottom: none; }
+    .spec-list span { color: var(--muted); }
+    .spec-list strong { text-align: right; }
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .feature-list li {
+      position: relative;
+      padding-left: 16px;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+    .feature-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .notice {
+      margin-top: 24px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-wrap">
+      <a class="brand" href="index.html">BYD <span>모델 상세 안내</span></a>
+      <nav aria-label="주 메뉴">
+        <a href="index.html">홈</a>
+        <a href="quote.html">견적서</a>
+        <a href="installment.html">삼성카드 할부</a>
+        <a href="charging.html">충전비 계산</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- 모델 선택 탭 -->
+    <div class="tab-bar" role="tablist" aria-label="차량 모델 선택">
+      <button class="tab-btn" data-car="sealion7">씨라이언 7</button>
+      <button class="tab-btn" data-car="sealion6">씨라이언 6 DM-i</button>
+      <button class="tab-btn" data-car="dolphin">돌핀</button>
+      <button class="tab-btn" data-car="atto3">아토 3</button>
+      <button class="tab-btn" data-car="seal">씰</button>
+    </div>
+
+    <!-- 동적 렌더링 영역 -->
+    <div id="content"></div>
+
+    <p class="notice">
+      ※ 표시된 가격 및 제원은 2026년 11월 국내 공식 모델 기준이며, 전기차 보조금 및 프로모션 적용 전 금액입니다.<br />
+      ※ 트림 및 옵션 구성은 제조사 정책에 따라 변경될 수 있습니다.
+    </p>
+  </main>
+
+  <script>
+    const MODELS = {
+      sealion7: {
+        tag: "전기 SUV",
+        en: "BYD SEALION 7",
+        name: "씨라이언 7",
+        summary: "스포티한 쿠페형 실루엣과 넉넉한 실내 공간을 겸비한 중형 전기 SUV입니다.",
+        price: "4,490만원부터",
+        img: "assets/sealion7.webp",
+        kpis: [
+          { label: "복합 주행거리", value: "398 km" },
+          { label: "파워트레인", value: "순수 전기차 (BEV)" },
+          { label: "배터리", value: "BYD 블레이드 배터리 (LFP)" },
+          { label: "차급", value: "중형 SUV" }
+        ],
+        specs: [
+          ["차량 유형", "전기 SUV"],
+          ["1회 충전 주행거리", "복합 398 km"],
+          ["배터리 타입", "LFP 블레이드 배터리"],
+          ["실내 시트", "인조가죽 시트"],
+          ["인포테인먼트", "15.6인치 고정형 디스플레이"]
+        ],
+        features: [
+          "CTB(Cell-to-Body) 차체 통합 구조로 높은 강성과 넓은 실내 바닥 공간 확보",
+          "15.6인치 대형 센터 디스플레이(고정형) 및 직관적인 디지털 클러스터 구성",
+          "패밀리 SUV에 적합한 넉넉한 2열 레그룸과 실용적인 트렁크 공간",
+          "고속 주행 안정성과 정숙성을 고려한 섀시 및 흡음 설계"
+        ]
+      },
+      sealion6: {
+        tag: "플러그인 하이브리드 SUV",
+        en: "BYD SEALION 6 DM-i",
+        name: "씨라이언 6 DM-i",
+        summary: "평소에는 전기차처럼, 장거리에는 하이브리드로 주행할 수 있는 DM-i 플러그인 하이브리드 SUV입니다.",
+        price: "3,750만원부터",
+        img: "assets/sealion6.webp",
+        kpis: [
+          { label: "EV 복합 주행", value: "70 km" },
+          { label: "파워트레인", value: "DM-i 플러그인 하이브리드" },
+          { label: "배터리", value: "BYD 블레이드 배터리 (LFP)" },
+          { label: "차급", value: "중형 PHEV SUV" }
+        ],
+        specs: [
+          ["차량 유형", "플러그인 하이브리드 SUV"],
+          ["EV 모드 주행거리", "복합 70 km"],
+          ["구동 시스템", "BYD DM-i 슈퍼 하이브리드"],
+          ["충전 및 주유", "외부 충전 + 가솔린 주유 겸용"],
+          ["공식 시작가", "3,750만원"]
+        ],
+        features: [
+          "출퇴근 등 도심 단거리는 순수 EV 모드로 주행해 유류비 절감",
+          "장거리 이동 시 충전 대기 걱정 없이 가솔린 엔진과 함께 여유로운 주행 가능",
+          "전기 모터 중심 구동으로 일반 하이브리드 대비 부드럽고 조용한 가속감",
+          "가족 단위 이동에 최적화된 실내 공간과 편의 사양"
+        ]
+      },
+      dolphin: {
+        tag: "전기 해치백",
+        en: "BYD DOLPHIN",
+        name: "돌핀",
+        summary: "합리적인 가격과 컴팩트한 차체 안에 실용적인 공간을 담은 도심형 전기 해치백입니다.",
+        price: "2,450만원부터",
+        img: "assets/dolphin.webp",
+        kpis: [
+          { label: "복합 주행거리", value: "307 km" },
+          { label: "파워트레인", value: "순수 전기차 (BEV)" },
+          { label: "배터리", value: "BYD 블레이드 배터리 (LFP)" },
+          { label: "차급", value: "소형 해치백" }
+        ],
+        specs: [
+          ["차량 유형", "전기 해치백"],
+          ["1회 충전 주행거리", "복합 307 km"],
+          ["플랫폼", "e-Platform 3.0"],
+          ["배터리 타입", "LFP 블레이드 배터리"],
+          ["공식 시작가", "2,450만원"]
+        ],
+        features: [
+          "보조금 적용 시 진입 장벽이 낮은 합리적인 전기차 포지션",
+          "좁은 골목과 주차 환경에서도 부담 없는 컴팩트한 차체 크기",
+          "e-Platform 3.0 기반의 긴 휠베이스로 차급 대비 여유로운 실내 공간",
+          "도심 출퇴근 및 세컨드카 용도에 최적화된 효율적인 전비"
+        ]
+      },
+      atto3: {
+        tag: "전기 SUV",
+        en: "BYD ATTO 3",
+        name: "아토 3",
+        summary: "도심 주행의 기동성과 주말 레저의 실용성을 균형 있게 갖춘 콤팩트 전기 SUV입니다.",
+        price: "3,490만원부터",
+        img: "assets/atto3.webp",
+        kpis: [
+          { label: "복합 주행거리", value: "321 km" },
+          { label: "파워트레인", value: "순수 전기차 (BEV)" },
+          { label: "배터리", value: "BYD 블레이드 배터리 (LFP)" },
+          { label: "차급", value: "준중형 SUV" }
+        ],
+        specs: [
+          ["차량 유형", "전기 SUV"],
+          ["1회 충전 주행거리", "복합 321 km"],
+          ["플랫폼", "e-Platform 3.0"],
+          ["배터리 타입", "LFP 블레이드 배터리"],
+          ["공식 시작가", "3,490만원"]
+        ],
+        features: [
+          "글로벌 시장에서 검증된 BYD 대표 콤팩트 전기 SUV",
+          "히트펌프 시스템 적용으로 사계절 안정적인 주행 효율 유지",
+          "V2L(외부 전력 공급) 기능으로 캠핑 및 야외 활동 활용도 극대화",
+          "개성 있는 실내 디자인과 기본 적용된 다양한 주행 보조 사양"
+        ]
+      },
+      seal: {
+        tag: "전기 세단",
+        en: "BYD SEAL",
+        name: "씰",
+        summary: "낮고 날렵한 디자인과 역동적인 주행 성능을 갖춘 중형 전기 세단입니다.",
+        price: "3,990만원부터",
+        img: "assets/seal.webp",
+        kpis: [
+          { label: "복합 주행거리", value: "449 km" },
+          { label: "구동 방식", value: "후륜(RWD) / 사륜(AWD)" },
+          { label: "배터리", value: "BYD 블레이드 배터리 (LFP)" },
+          { label: "차급", value: "중형 세단" }
+        ],
+        specs: [
+          ["차량 유형", "전기 세단"],
+          ["1회 충전 주행거리", "복합 449 km (트림별 상이)"],
+          ["구동 선택", "후륜구동(RWD) · 사륜구동(AWD)"],
+          ["차체 구조", "CTB(Cell-to-Body) 통합 구조"],
+          ["공식 시작가", "3,990만원"]
+        ],
+        features: [
+          "공기저항을 최소화한 유선형 차체로 긴 주행거리와 고속 안정성 확보",
+          "주행 성향에 따라 효율 중심의 후륜구동(RWD)과 퍼포먼스 사륜구동(AWD) 선택 가능",
+          "CTB 구조로 무게 중심을 낮춰 세단 본연의 탄탄한 코너링 구현",
+          "고급스러운 실내 마감과 정숙한 승차감"
+        ]
+      }
+    };
+
+    const contentEl = document.getElementById("content");
+    const tabButtons = document.querySelectorAll(".tab-btn");
+
+    function renderModel(key) {
+      const car = MODELS[key] || MODELS.sealion7;
+      tabButtons.forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.car === key);
+      });
+
+      const kpiHtml = car.kpis
+        .map(
+          (k) => `
+          <div class="kpi-card">
+            <span>${k.label}</span>
+            <strong>${k.value}</strong>
+          </div>`
+        )
+        .join("");
+
+      const specHtml = car.specs
+        .map(
+          ([label, val]) => `
+          <li>
+            <span>${label}</span>
+            <strong>${val}</strong>
+          </li>`
+        )
+        .join("");
+
+      const featureHtml = car.features.map((f) => `<li>${f}</li>`).join("");
+
+      contentEl.innerHTML = `
+        <section class="hero">
+          <div class="hero-img">
+            <img src="${car.img}" alt="${car.name}" onerror="this.parentElement.innerText='차량 이미지 (assets 폴더에 ${car.img.split('/').pop()} 추가)'" />
+          </div>
+          <div>
+            <span class="badge">${car.tag}</span>
+            <p class="en-name">${car.en}</p>
+            <h1>${car.name}</h1>
+            <p class="summary">${car.summary}</p>
+            <div class="price-box">
+              <span>공식 판매 가격 (보조금 적용 전)</span>
+              <strong>${car.price}</strong>
+            </div>
+            <div class="cta-row">
+              <a class="btn btn-primary" href="quote.html">견적서 계산하기</a>
+              <a class="btn btn-sub" href="installment.html">삼성카드 할부 계산</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="kpi-grid">${kpiHtml}</section>
+
+        <section class="grid-2">
+          <div class="panel">
+            <h2>주요 제원 요약</h2>
+            <ul class="spec-list">${specHtml}</ul>
+          </div>
+          <div class="panel">
+            <h2>핵심 특징</h2>
+            <ul class="feature-list">${featureHtml}</ul>
+          </div>
+        </section>
+      `;
+    }
+
+    tabButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const key = btn.dataset.car;
+        history.replaceState(null, "", `?car=${key}`);
+        renderModel(key);
+      });
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    const initialCar = params.get("car");
+    renderModel(MODELS[initialCar] ? initialCar : "sealion7");
+  </script>
+</body>
+</html>

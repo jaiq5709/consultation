@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>BYD 분당전시장 구매 견적서</title>
+  <style>
+    :root {
+      --primary: #1a4b8c;
+      --primary-dark: #103261;
+      --primary-light: #eef4fc;
+      --phev: #0f6b6e;
+      --phev-light: #e6f5f5;
+      --phev-border: #9ad4d6;
+      --accent: #0066ff;
+      --discount-bg: #e6f7f0;
+      --discount-text: #0a7b4c;
+      --discount-border: #a3e4c7;
+      --bg: #f4f6f9;
+      --card-bg: #ffffff;
+      --text-main: #191f28;
+      --text-sub: #4e5968;
+      --text-muted: #8b95a1;
+      --border: #e5e8eb;
+      --input-bg: #f9fafb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding-bottom: 48px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #ffffff;
+      padding: 12px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .header-inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    header h1 {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.18);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .print-btn {
+      background: #ffffff;
+      color: var(--primary-dark);
+      border: none;
+      border-radius: 20px;
+      padding: 6px 11px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .print-btn.secondary-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .print-btn:active {
+      opacity: 0.85;
+    }
+
+    .print-btn:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    /* Export action bar below quote sheet */
+    .export-action-bar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .export-btn {
+      height: 44px;
+      border-radius: 12px;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .export-btn.img-mode {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .export-btn.pdf-mode {
+      background: #ffffff;
+      color: var(--primary-dark);
+      border: 1.5px solid var(--primary);
+    }
+
+    /* Image Modal for iPad/iOS Safari Long-Press Save or Share */
+    .img-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.72);
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .img-modal-backdrop.open {
+      display: flex;
+    }
+
+    .img-modal-card {
+      background: #ffffff;
+      border-radius: 16px;
+      max-width: 560px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    .img-modal-head {
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .img-modal-head h3 {
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .img-modal-close {
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .img-modal-body {
+      padding: 12px 16px;
+      overflow-y: auto;
+      text-align: center;
+      background: #f1f5f9;
+    }
+
+    .img-modal-body img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    }
+
+    .img-modal-tip {
+      font-size: 12px;
+      color: var(--primary-dark);
+      font-weight: 700;
+      background: var(--primary-light);
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .img-modal-foot {
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    header p {
+      font-size: 12.5px;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 14px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      border: 1px solid var(--border);
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-right: 6px;
+    }
+
+    .step-badge.phev-step {
+      background: var(--phev);
+    }
+
+    .reset-btn {
+      font-size: 12px;
+      color: var(--text-sub);
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      padding: 5px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* Quote Type Tabs */
+    .quote-type-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .quote-type-btn {
+      background: var(--input-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .quote-type-btn .qt-title {
+      display: block;
+      font-size: 14.5px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .quote-type-btn .qt-sub {
+      display: block;
+      font-size: 11.5px;
+      color: var(--text-sub);
+      margin-top: 2px;
+    }
+
+    .quote-type-btn.active-ev {
+      background: var(--primary-light);
+      border-color: var(--primary);
+    }
+
+    .quote-type-btn.active-ev .qt-title {
+      color: var(--primary);
+    }
+
+    .quote-type-btn.active-phev {
+      background: var(--phev-light);
+      border-color: var(--phev);
+    }
+
+    .quote-type-btn.active-phev .qt-title {
+      color: var(--phev);
+    }
+
+    /* Sequential Chips & Selectors */
+    .field-block {
+      margin-top: 14px;
+    }
+
+    .field-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-sub);
+      margin-bottom: 6px;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .chip-btn {
+      background: var(--input-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 13px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.12s;
+    }
+
+    .chip-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .chip-btn.active.phev-active {
+      background: var(--phev);
+      border-color: var(--phev);
+    }
+
+    .trim-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 8px;
+    }
+
+    .trim-card {
+      background: var(--input-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 11px 13px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.12s;
+    }
+
+    .trim-card.active {
+      background: var(--primary-light);
+      border-color: var(--primary);
+    }
+
+    .trim-card.active.phev-active {
+      background: var(--phev-light);
+      border-color: var(--phev);
+    }
+
+    .trim-card .tr-name {
+      display: block;
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .trim-card .tr-price {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-top: 2px;
+    }
+
+    .trim-card.active.phev-active .tr-price {
+      color: var(--phev);
+    }
+
+    .trim-card .tr-mini-spec {
+      display: block;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .select-box, .text-input-box {
+      width: 100%;
+      height: 44px;
+      background: var(--input-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 0 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      outline: none;
+    }
+
+    .select-box:focus, .text-input-box:focus {
+      border-color: var(--accent);
+      background: #ffffff;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .three-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    /* Region & Subsidy Box */
+    .region-search-wrap {
+      position: relative;
+    }
+
+    .subsidy-result-box {
+      background: var(--discount-bg);
+      border: 1px solid var(--discount-border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-top: 10px;
+    }
+
+    .sub-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .sub-item label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--discount-text);
+      margin-bottom: 3px;
+    }
+
+    .sub-num-input {
+      width: 100%;
+      height: 36px;
+      border: 1px solid var(--discount-border);
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 0 8px;
+      font-size: 13.5px;
+      font-weight: 700;
+      text-align: right;
+      color: var(--text-main);
+      outline: none;
+    }
+
+    .sub-total-display {
+      text-align: right;
+    }
+
+    .sub-total-display .st-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--discount-text);
+    }
+
+    .sub-total-display .st-val {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--discount-text);
+    }
+
+    /* Editable Cost Rows */
+    .cost-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px dashed var(--border);
+      font-size: 13.5px;
+      gap: 10px;
+    }
+
+    .cost-row:last-child {
+      border-bottom: none;
+    }
+
+    .cost-row .c-label {
+      color: var(--text-sub);
+      font-weight: 600;
+    }
+
+    .cost-row .c-sub {
+      display: block;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .inline-num {
+      display: inline-flex;
+      align-items: center;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0 8px;
+      height: 36px;
+      width: 138px;
+    }
+
+    .inline-num input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      text-align: right;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+      outline: none;
+    }
+
+    .inline-num span {
+      font-size: 12px;
+      color: var(--text-sub);
+      margin-left: 4px;
+    }
+
+    /* ================= FINAL QUOTE SHEET (1-PAGE SUMMARY) ================= */
+    .quote-sheet {
+      background: #ffffff;
+      border: 2px solid var(--primary);
+      border-radius: 18px;
+      padding: 20px;
+      margin-top: 16px;
+      box-shadow: 0 6px 20px rgba(16, 50, 97, 0.08);
+    }
+
+    .quote-sheet.phev-sheet {
+      border-color: var(--phev);
+    }
+
+    .qs-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid var(--text-main);
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      gap: 10px;
+    }
+
+    .qs-title-area h2 {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+      color: var(--text-main);
+    }
+
+    .qs-type-pill {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 5px;
+      background: var(--primary-light);
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .phev-sheet .qs-type-pill {
+      background: var(--phev-light);
+      color: var(--phev);
+    }
+
+    .qs-meta {
+      text-align: right;
+      font-size: 11.5px;
+      color: var(--text-sub);
+      line-height: 1.45;
+    }
+
+    .qs-info-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      font-size: 12px;
+    }
+
+    .qs-info-item span {
+      display: block;
+      font-size: 10.5px;
+      color: var(--text-muted);
+    }
+
+    .qs-info-item strong {
+      font-size: 12.5px;
+      color: var(--text-main);
+    }
+
+    /* Selected Vehicle Banner inside Quote */
+    .qs-vehicle-box {
+      background: #f9fafb;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+    }
+
+    .qs-veh-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .qs-veh-name {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .qs-veh-color {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .phev-sheet .qs-veh-color {
+      color: var(--phev);
+    }
+
+    /* De-emphasized compact spec line as requested */
+    .qs-veh-specs-compact {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Highlighted Hero Totals */
+    .hero-total-box {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #ffffff;
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin-bottom: 14px;
+    }
+
+    .phev-sheet .hero-total-box {
+      background: linear-gradient(135deg, #0f6b6e 0%, #09484a 100%);
+    }
+
+    .hero-main-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .hero-main-label {
+      font-size: 14px;
+      font-weight: 700;
+      opacity: 0.92;
+    }
+
+    .hero-main-amount {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.6px;
+    }
+
+    .hero-main-amount span {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .hero-sub-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 12px;
+    }
+
+    .hero-sub-item span {
+      display: block;
+      font-size: 10.5px;
+      opacity: 0.8;
+    }
+
+    .hero-sub-item strong {
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    /* Breakdown Tables inside Quote */
+    .qs-breakdown-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .qs-panel {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 13px;
+    }
+
+    .qs-panel h4 {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 8px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .qs-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12.5px;
+      padding: 3.5px 0;
+    }
+
+    .qs-line .l-k {
+      color: var(--text-sub);
+    }
+
+    .qs-line .l-v {
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .qs-line.discount .l-v {
+      color: var(--discount-text);
+    }
+
+    .qs-line.sum {
+      border-top: 1px solid var(--border);
+      margin-top: 5px;
+      padding-top: 6px;
+      font-weight: 800;
+    }
+
+    .qs-line.sum .l-k {
+      color: var(--text-main);
+      font-weight: 800;
+    }
+
+    .qs-line.sum .l-v {
+      color: var(--primary);
+      font-size: 13.5px;
+    }
+
+    .phev-sheet .qs-line.sum .l-v {
+      color: var(--phev);
+    }
+
+    /* Highlighted Manager Contact in Quote Header */
+    .qs-manager-highlight {
+      display: inline-block;
+      margin-top: 4px;
+      background: var(--primary-light);
+      border: 1px solid #c9ddf7;
+      color: var(--primary-dark);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: -0.2px;
+    }
+
+    .phev-sheet .qs-manager-highlight {
+      background: var(--phev-light);
+      border-color: var(--phev-border);
+      color: var(--phev);
+    }
+
+    .qs-manager-highlight .mgr-tel {
+      color: var(--accent);
+      font-size: 13.5px;
+      font-weight: 900;
+      margin-left: 3px;
+    }
+
+    .phev-sheet .qs-manager-highlight .mgr-tel {
+      color: #0b5356;
+    }
+
+    /* Toggle Option Pills in Step 2 */
+    .option-toggle-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .toggle-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--input-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 7px 12px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-sub);
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.12s;
+    }
+
+    .toggle-pill.active-on {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .toggle-pill.active-off {
+      background: #fff5f5;
+      border-color: #eab8b8;
+      color: #a83c3c;
+    }
+
+    .warning-banner {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      color: #9a3412;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 11px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    .warning-banner.visible {
+      display: block;
+    }
+
+    /* Payment Schedule Soft Red Accent */
+    .qs-payment-panel {
+      background: #fff9f9;
+      border-color: #f3d6d6;
+    }
+
+    .qs-payment-panel h4 {
+      color: #8f3a3a;
+      border-bottom-color: #f0dada;
+    }
+
+    .qs-payment-panel .qs-line .l-v {
+      color: #a83c3c;
+      font-size: 13.5px;
+      font-weight: 800;
+    }
+
+    .qs-payment-panel .qs-line.sum {
+      border-top-color: #ecd0d0;
+    }
+
+    .qs-payment-panel .qs-line.sum .l-v {
+      color: #b83232;
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .qs-notes {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.45;
+      background: #f9fafb;
+      padding: 9px 11px;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .qs-info-bar {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .qs-breakdown-grid {
+        grid-template-columns: 1fr;
+      }
+      .sub-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .sub-total-display {
+        grid-column: span 2;
+        text-align: left;
+        border-top: 1px solid var(--discount-border);
+        padding-top: 6px;
+      }
+      .hero-main-amount {
+        font-size: 24px;
+      }
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+        padding-bottom: 0;
+      }
+      header, .no-print {
+        display: none !important;
+      }
+      .container {
+        max-width: 100%;
+        padding: 0;
+      }
+      .quote-sheet {
+        margin-top: 0;
+        box-shadow: none;
+        border-width: 1.5px;
+      }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+
+<header class="no-print">
+  <div class="header-inner">
+    <div class="header-top">
+      <h1>BYD 구매 견적서</h1>
+      <div class="header-actions">
+        <span class="badge" id="headerTypeBadge">할인 견적서</span>
+        <button type="button" class="print-btn" id="saveImgBtn" onclick="saveQuoteAsImage()">사진 저장</button>
+        <button type="button" class="print-btn secondary-btn" onclick="triggerPrintPdf()">PDF / 인쇄</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <!-- STEP 1: 견적서 유형 및 차량 선택 -->
+  <div class="card no-print">
+    <div class="section-title">
+      <div><span class="step-badge" id="step1Badge">STEP 1</span>견적서 유형 및 차량 선택</div>
+      <button type="button" class="reset-btn" onclick="resetAll()">전체 초기화</button>
+    </div>
+
+    <div class="quote-type-grid">
+      <button type="button" class="quote-type-btn active-ev" id="btnTypeEv" onclick="setQuoteType('ev')">
+        <span class="qt-title">할인 견적서 (전기차)</span>
+        <span class="qt-sub">SEALION7 · SEAL · ATTO3 · DOLPHIN</span>
+      </button>
+      <button type="button" class="quote-type-btn" id="btnTypePhev" onclick="setQuoteType('phev')">
+        <span class="qt-title">PHEV 견적서</span>
+        <span class="qt-sub">SEALION6 전용 (FWD / AWD)</span>
+      </button>
+    </div>
+
+    <div class="field-block" id="modelBlock">
+      <div class="field-label"><span>① 모델 선택</span></div>
+      <div class="chip-row" id="modelChips"></div>
+    </div>
+
+    <div class="field-block">
+      <div class="field-label"><span>② 트림 선택</span></div>
+      <div class="trim-grid" id="trimGrid"></div>
+    </div>
+
+    <div class="field-block">
+      <div class="field-label"><span>③ 외장 / 내장 색상 선택</span></div>
+      <select class="select-box" id="colorSelect" onchange="onColorChange(this.value)"></select>
+    </div>
+  </div>
+
+  <!-- STEP 2: 지역 보조금 및 할인 적용 -->
+  <div class="card no-print">
+    <div class="section-title">
+      <div><span class="step-badge" id="step2Badge">STEP 2</span><span id="step2Title">등록기준지역 및 보조금 할인</span></div>
+    </div>
+
+    <!-- EV 할인견적서 전용: 지역 선택 + 보조금 자동 조회 -->
+    <div id="evSubsidySection">
+      <div class="option-toggle-row">
+        <button type="button" class="toggle-pill active-on" id="toggleSubsidyBtn" onclick="toggleSubsidyEligible()">
+          <span id="toggleSubsidyIcon">●</span> <span id="toggleSubsidyText">보조금 할인 적용</span>
+        </button>
+        <button type="button" class="toggle-pill active-on" id="toggleTaxBtn" onclick="toggleEvTaxEligible()">
+          <span id="toggleTaxIcon">●</span> <span id="toggleTaxText">전기차 취득세 감면 적용</span>
+        </button>
+      </div>
+      <div class="warning-banner" id="evEligibilityNotice"></div>
+
+      <div class="two-col">
+        <div>
+          <div class="field-label"><span>시/도 선택</span></div>
+          <select class="select-box" id="sidoSelect" onchange="onSidoChange()"></select>
+        </div>
+        <div>
+          <div class="field-label"><span>시/군/구 선택</span></div>
+          <select class="select-box" id="sigunguSelect" onchange="onSigunguChange()"></select>
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-label"><span>지역명 빠른 검색 (예: 용인, 성남, 서울, 제주)</span></div>
+        <input type="text" class="text-input-box" id="regionSearchInput" placeholder="지역명을 입력하면 바로 매칭됩니다" oninput="onRegionQuickSearch(this.value)" />
+      </div>
+
+      <div class="subsidy-result-box">
+        <div class="sub-grid">
+          <div class="sub-item">
+            <label>국고 보조금 (원)</label>
+            <input type="text" class="sub-num-input" id="natSubInput" inputmode="numeric" oninput="onManualSubsidyInput()" />
+          </div>
+          <div class="sub-item">
+            <label>지자체 보조금 (원)</label>
+            <input type="text" class="sub-num-input" id="locSubInput" inputmode="numeric" oninput="onManualSubsidyInput()" />
+          </div>
+          <div class="sub-total-display">
+            <span class="st-label">보조금 대체 할인 합계</span>
+            <span class="st-val" id="subTotalPreview">0 원</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="cost-row">
+          <div>
+            <span class="c-label">추가 할인금액 (프로모션/전환/생애최초 등)</span>
+            <span class="c-sub">보조금 외 별도 차감할 금액이 있을 때 입력</span>
+          </div>
+          <div class="inline-num">
+            <input type="text" id="evExtraDiscountInput" value="0" inputmode="numeric" oninput="formatAndRecalc(this)" />
+            <span>원</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHEV 견적서 전용: 다자녀 혜택 / 면세 혜택 -->
+    <div id="phevBenefitSection" style="display: none;">
+      <div class="cost-row">
+        <div>
+          <span class="c-label">다자녀 취득세 감면 혜택</span>
+          <span class="c-sub">취득세에서 직접 차감 (2자녀 50% 등 해당 시 입력)</span>
+        </div>
+        <div class="inline-num">
+          <input type="text" id="phevMultiChildInput" value="0" inputmode="numeric" oninput="formatAndRecalc(this)" />
+          <span>원</span>
+        </div>
+      </div>
+      <div class="cost-row">
+        <div>
+          <span class="c-label">면세 / 프로모션 할인</span>
+          <span class="c-sub">차량가격 및 총 구입비용에서 차감</span>
+        </div>
+        <div class="inline-num">
+          <input type="text" id="phevTaxFreeInput" value="0" inputmode="numeric" oninput="formatAndRecalc(this)" />
+          <span>원</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: 부가비용 및 고객/결제 정보 -->
+  <div class="card no-print">
+    <div class="section-title">
+      <div><span class="step-badge" id="step3Badge">STEP 3</span>부가비용 및 고객·결제 조건</div>
+    </div>
+
+    <div class="two-col" style="margin-bottom: 10px;">
+      <div>
+        <div class="field-label"><span>고객명</span></div>
+        <input type="text" class="text-input-box" id="customerNameInput" value="VIP 고객님" oninput="recalculateAll()" />
+      </div>
+      <div>
+        <div class="field-label"><span>차량가격 정가 (원 · 수정 가능)</span></div>
+        <input type="text" class="text-input-box" id="basePriceInput" value="46,900,000" inputmode="numeric" oninput="onManualBasePriceInput(this)" style="text-align: right;" />
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-bottom: 12px;">
+      <div>
+        <div class="field-label"><span>계약 시 납입금 (계약금)</span></div>
+        <input type="text" class="text-input-box" id="depositInput" value="500,000" inputmode="numeric" oninput="formatAndRecalc(this)" style="text-align: right;" />
+      </div>
+      <div>
+        <div class="field-label"><span>공채 할인율 (%)</span></div>
+        <input type="number" class="text-input-box" id="bondRateInput" value="0" step="0.1" min="0" max="30" inputmode="decimal" oninput="recalculateAll()" style="text-align: right;" />
+      </div>
+    </div>
+
+    <div class="cost-row">
+      <div>
+        <span class="c-label" id="taxLabel">취득세 (7%, 전기차 감면)</span>
+        <span class="c-sub" id="taxFormulaNote">기존 견적서 수식 자동 계산 (직접 수정 가능)</span>
+      </div>
+      <div class="inline-num">
+        <input type="text" id="acqTaxInput" inputmode="numeric" oninput="onManualTaxInput(this)" />
+        <span>원</span>
+      </div>
+    </div>
+
+    <div class="cost-row">
+      <div>
+        <span class="c-label">기타등록비용</span>
+        <span class="c-sub">증지대·번호판대 등 기본 66,900원</span>
+      </div>
+      <div class="inline-num">
+        <input type="text" id="etcRegInput" value="66,900" inputmode="numeric" oninput="formatAndRecalc(this)" />
+        <span>원</span>
+      </div>
+    </div>
+
+    <div class="cost-row">
+      <div>
+        <span class="c-label">탁송료</span>
+        <span class="c-sub">기본 72,600원</span>
+      </div>
+      <div class="inline-num">
+        <input type="text" id="deliveryInput" value="72,600" inputmode="numeric" oninput="formatAndRecalc(this)" />
+        <span>원</span>
+      </div>
+    </div>
+
+    <div class="cost-row">
+      <div>
+        <span class="c-label">공채 비용</span>
+        <span class="c-sub" id="bondFormulaNote">SEAL·DOLPHIN·SEALION6 대상 공채 할인율 반영</span>
+      </div>
+      <div class="inline-num">
+        <input type="text" id="bondCostInput" value="0" inputmode="numeric" oninput="onManualBondInput(this)" />
+        <span>원</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL OUTPUT: 1장 요약 견적서 -->
+  <div class="quote-sheet" id="quoteSheet">
+    <div class="qs-header">
+      <div class="qs-title-area">
+        <span class="qs-type-pill" id="qsTypePill">할인 견적서 · 전기차</span>
+        <h2>구매 견적서</h2>
+      </div>
+      <div class="qs-meta">
+        <div>견적일자: <strong id="qsDate"></strong></div>
+        <div>딜러사: <strong>DT Networks</strong> · 전시장: <strong>BYD 분당전시장</strong></div>
+        <div class="qs-manager-highlight">담당자: <strong>정찬우 과장</strong> <span class="mgr-tel">010-9647-5709</span></div>
+      </div>
+    </div>
+
+    <div class="qs-info-bar">
+      <div class="qs-info-item">
+        <span>고객명</span>
+        <strong id="qsCustomer">VIP 고객님</strong>
+      </div>
+      <div class="qs-info-item">
+        <span>등록기준지역</span>
+        <strong id="qsRegion">경기 용인</strong>
+      </div>
+      <div class="qs-info-item">
+        <span>계약서번호</span>
+        <strong>-</strong>
+      </div>
+      <div class="qs-info-item">
+        <span>유효기간</span>
+        <strong>견적월 말일까지</strong>
+      </div>
+    </div>
+
+    <div class="qs-vehicle-box">
+      <div class="qs-veh-top">
+        <div class="qs-veh-name" id="qsVehName">SEALION7 · SEALION7 Plus</div>
+        <div class="qs-veh-color" id="qsVehColor">색상: Aurora White / Black</div>
+      </div>
+      <div class="qs-veh-specs-compact" id="qsVehSpecs">
+        배터리 82.56 kWh · 주행거리 398km · 제원 L 4830 - W 1925 - H 1620 / WB 2930
+      </div>
+    </div>
+
+    <!-- 강조된 총 구입비용 영역 -->
+    <div class="hero-total-box">
+      <div class="hero-main-row">
+        <span class="hero-main-label">최종 총 구입비용 (차량 결제대금 + 부대비용)</span>
+        <div class="hero-main-amount"><span id="qsGrandTotal" style="font-size: 28px; font-weight: 900;">46,315,950</span> <span>원</span></div>
+      </div>
+      <div class="hero-sub-grid">
+        <div class="hero-sub-item">
+          <span>차량 결제대금 (할인 반영)</span>
+          <strong id="qsPayableCar">44,730,000 원</strong>
+        </div>
+        <div class="hero-sub-item">
+          <span>등록 부대비용 합계</span>
+          <strong id="qsSideCostTotal">1,585,950 원</strong>
+        </div>
+        <div class="hero-sub-item">
+          <span>인도시 잔금 (계약금 제외)</span>
+          <strong id="qsBalanceDue">44,730,000 원</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="qs-breakdown-grid">
+      <div class="qs-panel">
+        <h4>가격 및 할인 상세</h4>
+        <div class="qs-line">
+          <span class="l-k">차량가격 (정가)</span>
+          <span class="l-v" id="qsBasePrice">46,900,000 원</span>
+        </div>
+        <div class="qs-line discount" id="qsDiscountRow1">
+          <span class="l-k" id="qsDiscountLabel1">할인금액 (보조금 대체)</span>
+          <span class="l-v" id="qsDiscountVal1">- 2,170,000 원</span>
+        </div>
+        <div class="qs-line discount" id="qsDiscountRow2" style="display: none;">
+          <span class="l-k" id="qsDiscountLabel2">추가 할인금액</span>
+          <span class="l-v" id="qsDiscountVal2">- 0 원</span>
+        </div>
+        <div class="qs-line sum">
+          <span class="l-k">차량가격 (결제금액)</span>
+          <span class="l-v" id="qsNetCarPrice">44,730,000 원</span>
+        </div>
+      </div>
+
+      <div class="qs-panel">
+        <h4>등록 부대비용 상세</h4>
+        <div class="qs-line">
+          <span class="l-k" id="qsTaxLineLabel">취득세 (7%, 전기차 감면)</span>
+          <span class="l-v" id="qsTaxVal">1,446,450 원</span>
+        </div>
+        <div class="qs-line">
+          <span class="l-k">기타등록비용</span>
+          <span class="l-v" id="qsEtcVal">66,900 원</span>
+        </div>
+        <div class="qs-line">
+          <span class="l-k">탁송료</span>
+          <span class="l-v" id="qsDelivVal">72,600 원</span>
+        </div>
+        <div class="qs-line">
+          <span class="l-k">공채</span>
+          <span class="l-v" id="qsBondVal">0 원</span>
+        </div>
+        <div class="qs-line sum">
+          <span class="l-k">부대비용 합계</span>
+          <span class="l-v" id="qsSideSumVal">1,585,950 원</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="qs-panel qs-payment-panel" style="margin-bottom: 12px;">
+      <h4>납입 일정 요약</h4>
+      <div class="qs-line">
+        <span class="l-k">① 계약 시 납입금 (계약금)</span>
+        <span class="l-v" id="qsDepositVal">500,000 원</span>
+      </div>
+      <div class="qs-line">
+        <span class="l-k">② 부대비용 별도 납입 (부대비용 합계 - 계약금)</span>
+        <span class="l-v" id="qsSideSepVal">1,085,950 원</span>
+      </div>
+      <div class="qs-line sum">
+        <span class="l-k">③ 출고(인도) 시 차량 잔금</span>
+        <span class="l-v" id="qsRemainCarVal">44,730,000 원</span>
+      </div>
+    </div>
+
+    <div class="qs-notes">
+      * 최초 계약 시 계약금만 납입하며, 잔금은 차량 등록일 기준 3일 전까지 납입합니다.<br/>
+      * 본 견적서는 견적일부터 해당 월 말일까지 유효하며, 세제 혜택 및 보조금 정책 변경 시 실제 금액이 달라질 수 있습니다.<br/>
+      <span id="qsTaxNoteLine">* 전기차 취득세는 감면 혜택(최대 140만원)이 적용된 기준 산출액입니다.</span>
+    </div>
+  </div>
+
+  <!-- 하단 저장 버튼 영역 -->
+  <div class="export-action-bar no-print">
+    <button type="button" class="export-btn img-mode" onclick="saveQuoteAsImage()">견적서 사진으로 저장</button>
+    <button type="button" class="export-btn pdf-mode" onclick="triggerPrintPdf()">PDF 저장 / 인쇄</button>
+  </div>
+</div>
+
+<!-- 모바일 사진 저장/공유 미리보기 모달 -->
+<div class="img-modal-backdrop no-print" id="imgModal" onclick="if(event.target===this) closeImgModal()">
+  <div class="img-modal-card">
+    <div class="img-modal-head">
+      <h3>견적서 이미지 저장</h3>
+      <button type="button" class="img-modal-close" onclick="closeImgModal()">닫기</button>
+    </div>
+    <div class="img-modal-body">
+      <div class="img-modal-tip">아이패드·아이폰에서는 아래 이미지를 꾹 눌러 '사진에 저장'하거나 하단 공유 버튼을 누르세요.</div>
+      <img id="generatedQuoteImg" alt="BYD 구매 견적서 이미지" />
+    </div>
+    <div class="img-modal-foot">
+      <button type="button" class="export-btn img-mode" id="shareImgBtn" onclick="shareGeneratedImage()">공유 / 사진 저장</button>
+      <a class="export-btn pdf-mode" id="downloadImgLink" download="BYD_구매견적서.png" style="text-decoration: none;">파일 다운로드</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const EMBEDDED_DATA = {"vehicles": [{"model": "SEALION7", "trim": "SEALION7 RWD", "price": 44900000, "battery": "82.56 kWh", "range": "398km", "dim": "L 4830 - W 1925 - H 1620 / WB 2930", "colors": ["Shark Grey / Black", "Atlantis Gray / Black", "Aurora White / Black", "Cosmos Black / Black", "Shark Grey / Tahiti Blue", "Atlantis Gray / Tahiti Blue", "Aurora White / Tahiti Blue", "Cosmos Black / Tahiti Blue"]}, {"model": "SEALION7", "trim": "SEALION7 Plus", "price": 46900000, "battery": "82.56 kWh", "range": "398km", "dim": "L 4830 - W 1925 - H 1620 / WB 2930", "colors": ["Shark Grey / Black", "Atlantis Gray / Black", "Aurora White / Black", "Cosmos Black / Black", "Shark Grey / Tahiti Blue", "Atlantis Gray / Tahiti Blue", "Aurora White / Tahiti Blue", "Cosmos Black / Tahiti Blue"]}, {"model": "SEALION7", "trim": "SEALION7 AWD", "price": 49900000, "battery": "82.56 kWh", "range": "374km", "dim": "L 4830 - W 1925 - H 1620 / WB 2930", "colors": ["Shark Grey / Black", "Atlantis Gray / Black", "Aurora White / Black", "Cosmos Black / Black", "Shark Grey / Tahiti Blue", "Atlantis Gray / Tahiti Blue", "Aurora White / Tahiti Blue", "Cosmos Black / Tahiti Blue"], "noSubsidy": true, "noEvTaxReduction": true}, {"model": "SEAL", "trim": "SEAL RWD 스탠다드", "price": 39900000, "battery": "82.56 kWh", "range": "449km", "dim": "L 4800 - W 1875 - H 1460 / WB 2920", "colors": ["Shark Grey / Black", "Atlantis Gray / Black", "Aurora White / Black", "Cosmos Black / Black"]}, {"model": "SEAL", "trim": "SEAL Plus RWD", "price": 41900000, "battery": "82.56 kWh", "range": "449km", "dim": "L 4800 - W 1875 - H 1460 / WB 2920", "colors": ["Shark Grey / Black", "Atlantis Gray / Black", "Aurora White / Black", "Cosmos Black / Black"]}, {"model": "SEAL", "trim": "SEAL Dynamic AWD", "price": 46900000, "battery": "82.56 kWh", "range": "407km", "dim": "L 4800 - W 1875 - H 1460 / WB 2920", "colors": ["Shark Grey / Black", "Atlantis Gray / Black", "Aurora White / Black", "Cosmos Black / Black"]}, {"model": "ATTO3", "trim": "ATTO3 Plus", "price": 34900000, "battery": "60.48 kWh", "range": "321km", "dim": "L 4455 - W 1875 - H 1615 / WB 2720", "colors": ["Time Gray / Black", "Atlantis Gray / Black", "Ski White / Black", "Cosmos Black / Black", "Parkour Red / Black", "Athene Blue / Black", "Time Gray / Brown-Beige", "Atlantis Gray / Brown-Beige", "Ski White / Brown-Beige", "Cosmos Black / Brown-Beige", "Parkour Red / Brown-Beige", "Athene Blue / Brown-Beige"]}, {"model": "DOLPHIN", "trim": "DOLPHIN", "price": 24500000, "battery": "49.92 kWh", "range": "307km", "dim": "L 4290 - W 1770 - H 1570 / WB 2700", "colors": ["Ski White / Black", "Sand White / Black"]}, {"model": "DOLPHIN", "trim": "DOLPHIN Active", "price": 29200000, "battery": "60.48 kWh", "range": "354km", "dim": "L 4290 - W 1770 - H 1570 / WB 2700", "colors": ["Ski White / Black", "Sand White / Black", "Time Grey & Ski White / Black", "Cosmos Black & Atlantis Grey / Black"]}, {"model": "SEALION6", "trim": "SEALION6 FWD", "price": 37500000, "battery": "18.3 kWh", "range": "1000km", "dim": "L 4775 - W 1890 - H 1670 / WB 2765", "colors": ["Aurora White / Black", "Cosmos Black / Black", "Time Gray / Black", "Stone Gray / Black", "Aurora White / Black & Brown", "Cosmos Black / Black & Brown", "Time Gray / Black & Brown", "Stone Gray / Black & Brown"]}, {"model": "SEALION6", "trim": "SEALION6 AWD", "price": 41900000, "battery": "26.6 kWh", "range": "900km", "dim": "L 4775 - W 1890 - H 1670 / WB 2765", "colors": ["Aurora White / Black", "Cosmos Black / Black", "Time Gray / Black", "Stone Gray / Black", "Aurora White / Black & Brown", "Cosmos Black / Black & Brown", "Time Gray / Black & Brown", "Stone Gray / Black & Brown"]}], "subsidies": [{"sido": "서울", "sigungu": "서울특별시", "rates": {"ATTO3 Plus": [1260000, 370000], "SEALION7 RWD": [1520000, 450000], "SEALION7 Plus": [1520000, 450000], "SEAL RWD 스탠다드": [1690000, 500000], "SEAL Plus RWD": [1690000, 500000], "SEAL Dynamic AWD": [1510000, 450000], "DOLPHIN": [1090000, 320000], "DOLPHIN Active": [1320000, 390000]}}, {"sido": "부산", "sigungu": "부산광역시", "rates": {"ATTO3 Plus": [1260000, 370000], "SEALION7 RWD": [1520000, 450000], "SEALION7 Plus": [1520000, 450000], "SEAL RWD 스탠다드": [1690000, 500000], "SEAL Plus RWD": [1690000, 500000], "SEAL Dynamic AWD": [1510000, 450000], "DOLPHIN": [1090000, 320000], "DOLPHIN Active": [1320000, 390000]}}, {"sido": "대구", "sigungu": "대구광역시", "rates": {"ATTO3 Plus": [1260000, 370000], "SEALION7 RWD": [1520000, 450000], "SEALION7 Plus": [1520000, 450000], "SEAL RWD 스탠다드": [1690000, 500000], "SEAL Plus RWD": [1690000, 500000], "SEAL Dynamic AWD": [1510000, 450000], "DOLPHIN": [1090000, 320000], "DOLPHIN Active": [1320000, 390000]}}, {"sido": "인천", "sigungu": "인천광역시", "rates": {"ATTO3 Plus": [1260000, 370000], "SEALION7 RWD": [1520000, 450000], "SEALION7 Plus": [1520000, 450000], "SEAL RWD 스탠다드": [1690000, 500000], "SEAL Plus RWD": [1690000, 500000], "SEAL Dynamic AWD": [1510000, 450000], "DOLPHIN": [1090000, 320000], "DOLPHIN Active": [1320000, 390000]}}, {"sido": "광주", "sigungu": "광주광역시", "rates": {"ATTO3 Plus": [1260000, 370000], "SEALION7 RWD": [1520000, 450000], "SEALION7 Plus": [1520000, 450000], "SEAL RWD 스탠다드": [1690000, 500000], "SEAL Plus RWD": [1690000, 500000], "SEAL Dynamic AWD": [1510000, 450000], "DOLPHIN": [1090000, 320000], "DOLPHIN Active": [1320000, 390000]}}, {"sido": "대전", "sigungu": "대전광역시", "rates": {"ATTO3 Plus": [1260000, 370000], "SEALION7 RWD": [1520000, 450000], "SEALION7 Plus": [1520000, 450000], "SEAL RWD 스탠다드": [1690000, 500000], "SEAL Plus RWD": [1690000, 500000], "SEAL Dynamic AWD": [1510000, 450000], "DOLPHIN": [1090000, 320000], "DOLPHIN Active": [1320000, 390000]}}, {"sido": "울산", "sigungu": "울산광역시", "rates": {"ATTO3 Plus": [1260000, 370000], "SEALION7 RWD": [1520000, 450000], "SEALION7 Plus": [1520000, 450000], "SEAL RWD 스탠다드": [1690000, 500000], "SEAL Plus RWD": [1690000, 500000], "SEAL Dynamic AWD": [1510000, 450000], "DOLPHIN": [1090000, 320000], "DOLPHIN Active": [1320000, 390000]}}, {"sido": "세종", "sigungu": "세종특별자치시", "rates": {"ATTO3 Plus": [1260000, 370000], "SEALION7 RWD": [1520000, 450000], "SEALION7 Plus": [1520000, 450000], "SEAL RWD 스탠다드": [1690000, 500000], "SEAL Plus RWD": [1690000, 500000], "SEAL Dynamic AWD": [1510000, 450000], "DOLPHIN": [1090000, 320000], "DOLPHIN Active": [1320000, 390000]}}, {"sido": "경기", "sigungu": "수원", "rates": {"ATTO3 Plus": [1260000, 520000], "SEALION7 RWD": [1520000, 630000], "SEALION7 Plus": [1520000, 630000], "SEAL RWD 스탠다드": [1690000, 700000], "SEAL Plus RWD": [1690000, 700000], "SEAL Dynamic AWD": [1510000, 620000], "DOLPHIN": [1090000, 450000], "DOLPHIN Active": [1320000, 550000]}}, {"sido": "경기", "sigungu": "성남", "rates": {"ATTO3 Plus": [1260000, 560000], "SEALION7 RWD": [1520000, 680000], "SEALION7 Plus": [1520000, 680000], "SEAL RWD 스탠다드": [1690000, 760000], "SEAL Plus RWD": [1690000, 760000], "SEAL Dynamic AWD": [1510000, 670000], "DOLPHIN": [1090000, 490000], "DOLPHIN Active": [1320000, 590000]}}, {"sido": "경기", "sigungu": "의정부", "rates": {"ATTO3 Plus": [1260000, 460000], "SEALION7 RWD": [1520000, 550000], "SEALION7 Plus": [1520000, 550000], "SEAL RWD 스탠다드": [1690000, 610000], "SEAL Plus RWD": [1690000, 610000], "SEAL Dynamic AWD": [1510000, 550000], "DOLPHIN": [1090000, 390000], "DOLPHIN Active": [1320000, 480000]}}, {"sido": "경기", "sigungu": "안양", "rates": {"ATTO3 Plus": [1260000, 530000], "SEALION7 RWD": [1520000, 640000], "SEALION7 Plus": [1520000, 640000], "SEAL RWD 스탠다드": [1690000, 710000], "SEAL Plus RWD": [1690000, 710000], "SEAL Dynamic AWD": [1510000, 640000], "DOLPHIN": [1090000, 460000], "DOLPHIN Active": [1320000, 560000]}}, {"sido": "경기", "sigungu": "부천", "rates": {"ATTO3 Plus": [1260000, 370000], "SEALION7 RWD": [1520000, 450000], "SEALION7 Plus": [1520000, 450000], "SEAL RWD 스탠다드": [1690000, 500000], "SEAL Plus RWD": [1690000, 500000], "SEAL Dynamic AWD": [1510000, 450000], "DOLPHIN": [1090000, 320000], "DOLPHIN Active": [1320000, 390000]}}, {"sido": "경기", "sigungu": "광명", "rates": {"ATTO3 Plus": [1260000, 880000], "SEALION7 RWD": [1520000, 1060000], "SEALION7 Plus": [1520000, 1060000], "SEAL RWD 스탠다드": [1690000, 1180000], "SEAL Plus RWD": [1690000, 1180000], "SEAL Dynamic AWD": [1510000, 1050000], "DOLPHIN": [1090000, 760000], "DOLPHIN Active": [1320000, 920000]}}, {"sido": "경기", "sigungu": "평택", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "경기", "sigungu": "동두천", "rates": {"ATTO3 Plus": [1260000, 700000], "SEALION7 RWD": [1520000, 850000], "SEALION7 Plus": [1520000, 850000], "SEAL RWD 스탠다드": [1690000, 940000], "SEAL Plus RWD": [1690000, 940000], "SEAL Dynamic AWD": [1510000, 840000], "DOLPHIN": [1090000, 610000], "DOLPHIN Active": [1320000, 730000]}}, {"sido": "경기", "sigungu": "안산", "rates": {"ATTO3 Plus": [1260000, 500000], "SEALION7 RWD": [1520000, 600000], "SEALION7 Plus": [1520000, 600000], "SEAL RWD 스탠다드": [1690000, 670000], "SEAL Plus RWD": [1690000, 670000], "SEAL Dynamic AWD": [1510000, 600000], "DOLPHIN": [1090000, 430000], "DOLPHIN Active": [1320000, 520000]}}, {"sido": "경기", "sigungu": "고양", "rates": {"ATTO3 Plus": [1260000, 500000], "SEALION7 RWD": [1520000, 600000], "SEALION7 Plus": [1520000, 600000], "SEAL RWD 스탠다드": [1690000, 670000], "SEAL Plus RWD": [1690000, 670000], "SEAL Dynamic AWD": [1510000, 600000], "DOLPHIN": [1090000, 430000], "DOLPHIN Active": [1320000, 520000]}}, {"sido": "경기", "sigungu": "과천", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "경기", "sigungu": "구리", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "경기", "sigungu": "남양주", "rates": {"ATTO3 Plus": [1260000, 370000], "SEALION7 RWD": [1520000, 450000], "SEALION7 Plus": [1520000, 450000], "SEAL RWD 스탠다드": [1690000, 500000], "SEAL Plus RWD": [1690000, 500000], "SEAL Dynamic AWD": [1510000, 450000], "DOLPHIN": [1090000, 320000], "DOLPHIN Active": [1320000, 390000]}}, {"sido": "경기", "sigungu": "오산", "rates": {"ATTO3 Plus": [1260000, 580000], "SEALION7 RWD": [1520000, 700000], "SEALION7 Plus": [1520000, 700000], "SEAL RWD 스탠다드": [1690000, 780000], "SEAL Plus RWD": [1690000, 780000], "SEAL Dynamic AWD": [1510000, 700000], "DOLPHIN": [1090000, 500000], "DOLPHIN Active": [1320000, 610000]}}, {"sido": "경기", "sigungu": "시흥", "rates": {"ATTO3 Plus": [1260000, 500000], "SEALION7 RWD": [1520000, 600000], "SEALION7 Plus": [1520000, 600000], "SEAL RWD 스탠다드": [1690000, 670000], "SEAL Plus RWD": [1690000, 670000], "SEAL Dynamic AWD": [1510000, 600000], "DOLPHIN": [1090000, 430000], "DOLPHIN Active": [1320000, 520000]}}, {"sido": "경기", "sigungu": "군포", "rates": {"ATTO3 Plus": [1260000, 600000], "SEALION7 RWD": [1520000, 730000], "SEALION7 Plus": [1520000, 730000], "SEAL RWD 스탠다드": [1690000, 810000], "SEAL Plus RWD": [1690000, 810000], "SEAL Dynamic AWD": [1510000, 720000], "DOLPHIN": [1090000, 520000], "DOLPHIN Active": [1320000, 630000]}}, {"sido": "경기", "sigungu": "의왕", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "경기", "sigungu": "하남", "rates": {"ATTO3 Plus": [1260000, 370000], "SEALION7 RWD": [1520000, 450000], "SEALION7 Plus": [1520000, 450000], "SEAL RWD 스탠다드": [1690000, 500000], "SEAL Plus RWD": [1690000, 500000], "SEAL Dynamic AWD": [1510000, 450000], "DOLPHIN": [1090000, 320000], "DOLPHIN Active": [1320000, 390000]}}, {"sido": "경기", "sigungu": "용인", "rates": {"ATTO3 Plus": [1260000, 540000], "SEALION7 RWD": [1520000, 650000], "SEALION7 Plus": [1520000, 650000], "SEAL RWD 스탠다드": [1690000, 730000], "SEAL Plus RWD": [1690000, 730000], "SEAL Dynamic AWD": [1510000, 650000], "DOLPHIN": [1090000, 470000], "DOLPHIN Active": [1320000, 570000]}}, {"sido": "경기", "sigungu": "파주", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "경기", "sigungu": "이천", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "경기", "sigungu": "안성", "rates": {"ATTO3 Plus": [1260000, 750000], "SEALION7 RWD": [1520000, 910000], "SEALION7 Plus": [1520000, 910000], "SEAL RWD 스탠다드": [1690000, 1010000], "SEAL Plus RWD": [1690000, 1010000], "SEAL Dynamic AWD": [1510000, 900000], "DOLPHIN": [1090000, 650000], "DOLPHIN Active": [1320000, 790000]}}, {"sido": "경기", "sigungu": "김포", "rates": {"ATTO3 Plus": [1260000, 500000], "SEALION7 RWD": [1520000, 600000], "SEALION7 Plus": [1520000, 600000], "SEAL RWD 스탠다드": [1690000, 670000], "SEAL Plus RWD": [1690000, 670000], "SEAL Dynamic AWD": [1510000, 600000], "DOLPHIN": [1090000, 430000], "DOLPHIN Active": [1320000, 520000]}}, {"sido": "경기", "sigungu": "화성", "rates": {"ATTO3 Plus": [1260000, 420000], "SEALION7 RWD": [1520000, 500000], "SEALION7 Plus": [1520000, 500000], "SEAL RWD 스탠다드": [1690000, 560000], "SEAL Plus RWD": [1690000, 560000], "SEAL Dynamic AWD": [1510000, 500000], "DOLPHIN": [1090000, 360000], "DOLPHIN Active": [1320000, 440000]}}, {"sido": "경기", "sigungu": "광주", "rates": {"ATTO3 Plus": [1260000, 370000], "SEALION7 RWD": [1520000, 450000], "SEALION7 Plus": [1520000, 450000], "SEAL RWD 스탠다드": [1690000, 500000], "SEAL Plus RWD": [1690000, 500000], "SEAL Dynamic AWD": [1510000, 450000], "DOLPHIN": [1090000, 320000], "DOLPHIN Active": [1320000, 390000]}}, {"sido": "경기", "sigungu": "양주", "rates": {"ATTO3 Plus": [1260000, 520000], "SEALION7 RWD": [1520000, 630000], "SEALION7 Plus": [1520000, 630000], "SEAL RWD 스탠다드": [1690000, 700000], "SEAL Plus RWD": [1690000, 700000], "SEAL Dynamic AWD": [1510000, 620000], "DOLPHIN": [1090000, 450000], "DOLPHIN Active": [1320000, 550000]}}, {"sido": "경기", "sigungu": "포천", "rates": {"ATTO3 Plus": [1260000, 500000], "SEALION7 RWD": [1520000, 600000], "SEALION7 Plus": [1520000, 600000], "SEAL RWD 스탠다드": [1690000, 670000], "SEAL Plus RWD": [1690000, 670000], "SEAL Dynamic AWD": [1510000, 600000], "DOLPHIN": [1090000, 430000], "DOLPHIN Active": [1320000, 520000]}}, {"sido": "경기", "sigungu": "여주", "rates": {"ATTO3 Plus": [1260000, 860000], "SEALION7 RWD": [1520000, 1040000], "SEALION7 Plus": [1520000, 1040000], "SEAL RWD 스탠다드": [1690000, 1160000], "SEAL Plus RWD": [1690000, 1160000], "SEAL Dynamic AWD": [1510000, 1040000], "DOLPHIN": [1090000, 750000], "DOLPHIN Active": [1320000, 910000]}}, {"sido": "경기", "sigungu": "연천군", "rates": {"ATTO3 Plus": [1260000, 1190000], "SEALION7 RWD": [1520000, 1440000], "SEALION7 Plus": [1520000, 1440000], "SEAL RWD 스탠다드": [1690000, 1600000], "SEAL Plus RWD": [1690000, 1600000], "SEAL Dynamic AWD": [1510000, 1430000], "DOLPHIN": [1090000, 1030000], "DOLPHIN Active": [1320000, 1250000]}}, {"sido": "경기", "sigungu": "가평군", "rates": {"ATTO3 Plus": [1260000, 840000], "SEALION7 RWD": [1520000, 1010000], "SEALION7 Plus": [1520000, 1010000], "SEAL RWD 스탠다드": [1690000, 1120000], "SEAL Plus RWD": [1690000, 1120000], "SEAL Dynamic AWD": [1510000, 1000000], "DOLPHIN": [1090000, 720000], "DOLPHIN Active": [1320000, 880000]}}, {"sido": "경기", "sigungu": "양평군", "rates": {"ATTO3 Plus": [1260000, 840000], "SEALION7 RWD": [1520000, 1010000], "SEALION7 Plus": [1520000, 1010000], "SEAL RWD 스탠다드": [1690000, 1120000], "SEAL Plus RWD": [1690000, 1120000], "SEAL Dynamic AWD": [1510000, 1000000], "DOLPHIN": [1090000, 720000], "DOLPHIN Active": [1320000, 880000]}}, {"sido": "강원", "sigungu": "춘천", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "강원", "sigungu": "원주", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "강원", "sigungu": "강릉", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "강원", "sigungu": "동해", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "강원", "sigungu": "태백", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "강원", "sigungu": "속초", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "강원", "sigungu": "삼척", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "강원", "sigungu": "홍천군", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "강원", "sigungu": "횡성군", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "강원", "sigungu": "영월군", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "강원", "sigungu": "평창군", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "강원", "sigungu": "정선군", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "강원", "sigungu": "철원군", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "강원", "sigungu": "화천군", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "강원", "sigungu": "양구군", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "강원", "sigungu": "인제군", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "강원", "sigungu": "고성군", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "강원", "sigungu": "양양군", "rates": {"ATTO3 Plus": [1260000, 630000], "SEALION7 RWD": [1520000, 760000], "SEALION7 Plus": [1520000, 760000], "SEAL RWD 스탠다드": [1690000, 840000], "SEAL Plus RWD": [1690000, 840000], "SEAL Dynamic AWD": [1510000, 750000], "DOLPHIN": [1090000, 540000], "DOLPHIN Active": [1320000, 660000]}}, {"sido": "충북", "sigungu": "청주", "rates": {"ATTO3 Plus": [1260000, 1260000], "SEALION7 RWD": [1520000, 1520000], "SEALION7 Plus": [1520000, 1520000], "SEAL RWD 스탠다드": [1690000, 1690000], "SEAL Plus RWD": [1690000, 1690000], "SEAL Dynamic AWD": [1510000, 1510000], "DOLPHIN": [1090000, 1090000], "DOLPHIN Active": [1320000, 1320000]}}, {"sido": "충북", "sigungu": "충주", "rates": {"ATTO3 Plus": [1260000, 1260000], "SEALION7 RWD": [1520000, 1520000], "SEALION7 Plus": [1520000, 1520000], "SEAL RWD 스탠다드": [1690000, 1690000], "SEAL Plus RWD": [1690000, 1690000], "SEAL Dynamic AWD": [1510000, 1510000], "DOLPHIN": [1090000, 1090000], "DOLPHIN Active": [1320000, 1320000]}}, {"sido": "충북", "sigungu": "제천", "rates": {"ATTO3 Plus": [1260000, 1260000], "SEALION7 RWD": [1520000, 1520000], "SEALION7 Plus": [1520000, 1520000], "SEAL RWD 스탠다드": [1690000, 1690000], "SEAL Plus RWD": [1690000, 1690000], "SEAL Dynamic AWD": [1510000, 1510000], "DOLPHIN": [1090000, 1090000], "DOLPHIN Active": [1320000, 1320000]}}, {"sido": "충북", "sigungu": "보은군", "rates": {"ATTO3 Plus": [1260000, 1260000], "SEALION7 RWD": [1520000, 1520000], "SEALION7 Plus": [1520000, 1520000], "SEAL RWD 스탠다드": [1690000, 1690000], "SEAL Plus RWD": [1690000, 1690000], "SEAL Dynamic AWD": [1510000, 1510000], "DOLPHIN": [1090000, 1090000], "DOLPHIN Active": [1320000, 1320000]}}, {"sido": "충북", "sigungu": "옥천군", "rates": {"ATTO3 Plus": [1260000, 1260000], "SEALION7 RWD": [1520000, 1520000], "SEALION7 Plus": [1520000, 1520000], "SEAL RWD 스탠다드": [1690000, 1690000], "SEAL Plus RWD": [1690000, 1690000], "SEAL Dynamic AWD": [1510000, 1510000], "DOLPHIN": [1090000, 1090000], "DOLPHIN Active": [1320000, 1320000]}}, {"sido": "충북", "sigungu": "증평군", "rates": {"ATTO3 Plus": [1260000, 1260000], "SEALION7 RWD": [1520000, 1520000], "SEALION7 Plus": [1520000, 1520000], "SEAL RWD 스탠다드": [1690000, 1690000], "SEAL Plus RWD": [1690000, 1690000], "SEAL Dynamic AWD": [1510000, 1510000], "DOLPHIN": [1090000, 1090000], "DOLPHIN Active": [1320000, 1320000]}}, {"sido": "충북", "sigungu": "영동군", "rates": {"ATTO3 Plus": [1260000, 1260000], "SEALION7 RWD": [1520000, 1520000], "SEALION7 Plus": [1520000, 1520000], "SEAL RWD 스탠다드": [1690000, 1690000], "SEAL Plus RWD": [1690000, 1690000], "SEAL Dynamic AWD": [1510000, 1510000], "DOLPHIN": [1090000, 1090000], "DOLPHIN Active": [1320000, 1320000]}}, {"sido": "충북", "sigungu": "진천군", "rates": {"ATTO3 Plus": [1260000, 1260000], "SEALION7 RWD": [1520000, 1520000], "SEALION7 Plus": [1520000, 1520000], "SEAL RWD 스탠다드": [1690000, 1690000], "SEAL Plus RWD": [1690000, 1690000], "SEAL Dynamic AWD": [1510000, 1510000], "DOLPHIN": [1090000, 1090000], "DOLPHIN Active": [1320000, 1320000]}}, {"sido": "충북", "sigungu": "괴산군", "rates": {"ATTO3 Plus": [1260000, 1260000], "SEALION7 RWD": [1520000, 1520000], "SEALION7 Plus": [1520000, 1520000], "SEAL RWD 스탠다드": [1690000, 1690000], "SEAL Plus RWD": [1690000, 1690000], "SEAL Dynamic AWD": [1510000, 1510000], "DOLPHIN": [1090000, 1090000], "DOLPHIN Active": [1320000, 1320000]}}, {"sido": "충북", "sigungu": "음성군", "rates": {"ATTO3 Plus": [1260000, 1260000], "SEALION7 RWD": [1520000, 1520000], "SEALION7 Plus": [1520000, 1520000], "SEAL RWD 스탠다드": [1690000, 1690000], "SEAL Plus RWD": [1690000, 1690000], "SEAL Dynamic AWD": [1510000, 1510000], "DOLPHIN": [1090000, 1090000], "DOLPHIN Active": [1320000, 1320000]}}, {"sido": "충북", "sigungu": "단양군", "rates": {"ATTO3 Plus": [1260000, 1260000], "SEALION7 RWD": [1520000, 1520000], "SEALION7 Plus": [1520000, 1520000], "SEAL RWD 스탠다드": [1690000, 1690000], "SEAL Plus RWD": [1690000, 1690000], "SEAL Dynamic AWD": [1510000, 1510000], "DOLPHIN": [1090000, 1090000], "DOLPHIN Active": [1320000, 1320000]}}, {"sido": "충남", "sigungu": "천안", "rates": {"ATTO3 Plus": [1260000, 1300000], "SEALION7 RWD": [1520000, 1570000], "SEALION7 Plus": [1520000, 1570000], "SEAL RWD 스탠다드": [1690000, 1750000], "SEAL Plus RWD": [1690000, 1750000], "SEAL Dynamic AWD": [1510000, 1560000], "DOLPHIN": [1090000, 1130000], "DOLPHIN Active": [1320000, 1370000]}}, {"sido": "충남", "sigungu": "공주", "rates": {"ATTO3 Plus": [1260000, 1300000], "SEALION7 RWD": [1520000, 1570000], "SEALION7 Plus": [1520000, 1570000], "SEAL RWD 스탠다드": [1690000, 1750000], "SEAL Plus RWD": [1690000, 1750000], "SEAL Dynamic AWD": [1510000, 1560000], "DOLPHIN": [1090000, 1130000], "DOLPHIN Active": [1320000, 1370000]}}, {"sido": "충남", "sigungu": "보령", "rates": {"ATTO3 Plus": [1260000, 1300000], "SEALION7 RWD": [1520000, 1570000], "SEALION7 Plus": [1520000, 1570000], "SEAL RWD 스탠다드": [1690000, 1750000], "SEAL Plus RWD": [1690000, 1750000], "SEAL Dynamic AWD": [1510000, 1560000], "DOLPHIN": [1090000, 1130000], "DOLPHIN Active": [1320000, 1370000]}}, {"sido": "충남", "sigungu": "아산", "rates": {"ATTO3 Plus": [1260000, 1300000], "SEALION7 RWD": [1520000, 1570000], "SEALION7 Plus": [1520000, 1570000], "SEAL RWD 스탠다드": [1690000, 1750000], "SEAL Plus RWD": [1690000, 1750000], "SEAL Dynamic AWD": [1510000, 1560000], "DOLPHIN": [1090000, 1130000], "DOLPHIN Active": [1320000, 1370000]}}, {"sido": "충남", "sigungu": "서산", "rates": {"ATTO3 Plus": [1260000, 1300000], "SEALION7 RWD": [1520000, 1570000], "SEALION7 Plus": [1520000, 1570000], "SEAL RWD 스탠다드": [1690000, 1750000], "SEAL Plus RWD": [1690000, 1750000], "SEAL Dynamic AWD": [1510000, 1560000], "DOLPHIN": [1090000, 1130000], "DOLPHIN Active": [1320000, 1370000]}}, {"sido": "충남", "sigungu": "계룡", "rates": {"ATTO3 Plus": [1260000, 1300000], "SEALION7 RWD": [1520000, 1570000], "SEALION7 Plus": [1520000, 1570000], "SEAL RWD 스탠다드": [1690000, 1750000], "SEAL Plus RWD": [1690000, 1750000], "SEAL Dynamic AWD": [1510000, 1560000], "DOLPHIN": [1090000, 1130000], "DOLPHIN Active": [1320000, 1370000]}}, {"sido": "충남", "sigungu": "당진", "rates": {"ATTO3 Plus": [1260000, 1300000], "SEALION7 RWD": [1520000, 1570000], "SEALION7 Plus": [1520000, 1570000], "SEAL RWD 스탠다드": [1690000, 1750000], "SEAL Plus RWD": [1690000, 1750000], "SEAL Dynamic AWD": [1510000, 1560000], "DOLPHIN": [1090000, 1130000], "DOLPHIN Active": [1320000, 1370000]}}, {"sido": "충남", "sigungu": "금산군", "rates": {"ATTO3 Plus": [1260000, 1300000], "SEALION7 RWD": [1520000, 1570000], "SEALION7 Plus": [1520000, 1570000], "SEAL RWD 스탠다드": [1690000, 1750000], "SEAL Plus RWD": [1690000, 1750000], "SEAL Dynamic AWD": [1510000, 1560000], "DOLPHIN": [1090000, 1130000], "DOLPHIN Active": [1320000, 1370000]}}, {"sido": "충남", "sigungu": "부여군", "rates": {"ATTO3 Plus": [1260000, 1300000], "SEALION7 RWD": [1520000, 1570000], "SEALION7 Plus": [1520000, 1570000], "SEAL RWD 스탠다드": [1690000, 1750000], "SEAL Plus RWD": [1690000, 1750000], "SEAL Dynamic AWD": [1510000, 1560000], "DOLPHIN": [1090000, 1130000], "DOLPHIN Active": [1320000, 1370000]}}, {"sido": "충남", "sigungu": "서천군", "rates": {"ATTO3 Plus": [1260000, 1300000], "SEALION7 RWD": [1520000, 1570000], "SEALION7 Plus": [1520000, 1570000], "SEAL RWD 스탠다드": [1690000, 1750000], "SEAL Plus RWD": [1690000, 1750000], "SEAL Dynamic AWD": [1510000, 1560000], "DOLPHIN": [1090000, 1130000], "DOLPHIN Active": [1320000, 1370000]}}, {"sido": "충남", "sigungu": "청양군", "rates": {"ATTO3 Plus": [1260000, 1300000], "SEALION7 RWD": [1520000, 1570000], "SEALION7 Plus": [1520000, 1570000], "SEAL RWD 스탠다드": [1690000, 1750000], "SEAL Plus RWD": [1690000, 1750000], "SEAL Dynamic AWD": [1510000, 1560000], "DOLPHIN": [1090000, 1130000], "DOLPHIN Active": [1320000, 1370000]}}, {"sido": "충남", "sigungu": "홍성군", "rates": {"ATTO3 Plus": [1260000, 1300000], "SEALION7 RWD": [1520000, 1570000], "SEALION7 Plus": [1520000, 1570000], "SEAL RWD 스탠다드": [1690000, 1750000], "SEAL Plus RWD": [1690000, 1750000], "SEAL Dynamic AWD": [1510000, 1560000], "DOLPHIN": [1090000, 1130000], "DOLPHIN Active": [1320000, 1370000]}}, {"sido": "충남", "sigungu": "예산군", "rates": {"ATTO3 Plus": [1260000, 1300000], "SEALION7 RWD": [1520000, 1570000], "SEALION7 Plus": [1520000, 1570000], "SEAL RWD 스탠다드": [1690000, 1750000], "SEAL Plus RWD": [1690000, 1750000], "SEAL Dynamic AWD": [1510000, 1560000], "DOLPHIN": [1090000, 1130000], "DOLPHIN Active": [1320000, 1370000]}}, {"sido": "충남", "sigungu": "태안군", "rates": {"ATTO3 Plus": [1260000, 1300000], "SEALION7 RWD": [1520000, 1570000], "SEALION7 Plus": [1520000, 1570000], "SEAL RWD 스탠다드": [1690000, 1750000], "SEAL Plus RWD": [1690000, 1750000], "SEAL Dynamic AWD": [1510000, 1560000], "DOLPHIN": [1090000, 1130000], "DOLPHIN Active": [1320000, 1370000]}}, {"sido": "전북", "sigungu": "전주", "rates": {"ATTO3 Plus": [1260000, 1360000], "SEALION7 RWD": [1520000, 1650000], "SEALION7 Plus": [1520000, 1650000], "SEAL RWD 스탠다드": [1690000, 1830000], "SEAL Plus RWD": [1690000, 1830000], "SEAL Dynamic AWD": [1510000, 1640000], "DOLPHIN": [1090000, 1180000], "DOLPHIN Active": [1320000, 1430000]}}, {"sido": "전북", "sigungu": "군산", "rates": {"ATTO3 Plus": [1260000, 1360000], "SEALION7 RWD": [1520000, 1650000], "SEALION7 Plus": [1520000, 1650000], "SEAL RWD 스탠다드": [1690000, 1830000], "SEAL Plus RWD": [1690000, 1830000], "SEAL Dynamic AWD": [1510000, 1640000], "DOLPHIN": [1090000, 1180000], "DOLPHIN Active": [1320000, 1430000]}}, {"sido": "전북", "sigungu": "익산", "rates": {"ATTO3 Plus": [1260000, 1360000], "SEALION7 RWD": [1520000, 1650000], "SEALION7 Plus": [1520000, 1650000], "SEAL RWD 스탠다드": [1690000, 1830000], "SEAL Plus RWD": [1690000, 1830000], "SEAL Dynamic AWD": [1510000, 1640000], "DOLPHIN": [1090000, 1180000], "DOLPHIN Active": [1320000, 1430000]}}, {"sido": "전북", "sigungu": "정읍", "rates": {"ATTO3 Plus": [1260000, 1360000], "SEALION7 RWD": [1520000, 1650000], "SEALION7 Plus": [1520000, 1650000], "SEAL RWD 스탠다드": [1690000, 1830000], "SEAL Plus RWD": [1690000, 1830000], "SEAL Dynamic AWD": [1510000, 1640000], "DOLPHIN": [1090000, 1180000], "DOLPHIN Active": [1320000, 1430000]}}, {"sido": "전북", "sigungu": "남원", "rates": {"ATTO3 Plus": [1260000, 1360000], "SEALION7 RWD": [1520000, 1650000], "SEALION7 Plus": [1520000, 1650000], "SEAL RWD 스탠다드": [1690000, 1830000], "SEAL Plus RWD": [1690000, 1830000], "SEAL Dynamic AWD": [1510000, 1640000], "DOLPHIN": [1090000, 1180000], "DOLPHIN Active": [1320000, 1430000]}}, {"sido": "전북", "sigungu": "김제", "rates": {"ATTO3 Plus": [1260000, 1360000], "SEALION7 RWD": [1520000, 1650000], "SEALION7 Plus": [1520000, 1650000], "SEAL RWD 스탠다드": [1690000, 1830000], "SEAL Plus RWD": [1690000, 1830000], "SEAL Dynamic AWD": [1510000, 1640000], "DOLPHIN": [1090000, 1180000], "DOLPHIN Active": [1320000, 1430000]}}, {"sido": "전북", "sigungu": "완주군", "rates": {"ATTO3 Plus": [1260000, 1360000], "SEALION7 RWD": [1520000, 1650000], "SEALION7 Plus": [1520000, 1650000], "SEAL RWD 스탠다드": [1690000, 1830000], "SEAL Plus RWD": [1690000, 1830000], "SEAL Dynamic AWD": [1510000, 1640000], "DOLPHIN": [1090000, 1180000], "DOLPHIN Active": [1320000, 1430000]}}, {"sido": "전북", "sigungu": "진안군", "rates": {"ATTO3 Plus": [1260000, 1360000], "SEALION7 RWD": [1520000, 1650000], "SEALION7 Plus": [1520000, 1650000], "SEAL RWD 스탠다드": [1690000, 1830000], "SEAL Plus RWD": [1690000, 1830000], "SEAL Dynamic AWD": [1510000, 1640000], "DOLPHIN": [1090000, 1180000], "DOLPHIN Active": [1320000, 1430000]}}, {"sido": "전북", "sigungu": "무주군", "rates": {"ATTO3 Plus": [1260000, 1360000], "SEALION7 RWD": [1520000, 1650000], "SEALION7 Plus": [1520000, 1650000], "SEAL RWD 스탠다드": [1690000, 1830000], "SEAL Plus RWD": [1690000, 1830000], "SEAL Dynamic AWD": [1510000, 1640000], "DOLPHIN": [1090000, 1180000], "DOLPHIN Active": [1320000, 1430000]}}, {"sido": "전북", "sigungu": "장수군", "rates": {"ATTO3 Plus": [1260000, 1360000], "SEALION7 RWD": [1520000, 1650000], "SEALION7 Plus": [1520000, 1650000], "SEAL RWD 스탠다드": [1690000, 1830000], "SEAL Plus RWD": [1690000, 1830000], "SEAL Dynamic AWD": [1510000, 1640000], "DOLPHIN": [1090000, 1180000], "DOLPHIN Active": [1320000, 1430000]}}, {"sido": "전북", "sigungu": "임실군", "rates": {"ATTO3 Plus": [1260000, 1360000], "SEALION7 RWD": [1520000, 1650000], "SEALION7 Plus": [1520000, 1650000], "SEAL RWD 스탠다드": [1690000, 1830000], "SEAL Plus RWD": [1690000, 1830000], "SEAL Dynamic AWD": [1510000, 1640000], "DOLPHIN": [1090000, 1180000], "DOLPHIN Active": [1320000, 1430000]}}, {"sido": "전북", "sigungu": "순창군", "rates": {"ATTO3 Plus": [1260000, 1360000], "SEALION7 RWD": [1520000, 1650000], "SEALION7 Plus": [1520000, 1650000], "SEAL RWD 스탠다드": [1690000, 1830000], "SEAL Plus RWD": [1690000, 1830000], "SEAL Dynamic AWD": [1510000, 1640000], "DOLPHIN": [1090000, 1180000], "DOLPHIN Active": [1320000, 1430000]}}, {"sido": "전북", "sigungu": "고창군", "rates": {"ATTO3 Plus": [1260000, 1360000], "SEALION7 RWD": [1520000, 1650000], "SEALION7 Plus": [1520000, 1650000], "SEAL RWD 스탠다드": [1690000, 1830000], "SEAL Plus RWD": [1690000, 1830000], "SEAL Dynamic AWD": [1510000, 1640000], "DOLPHIN": [1090000, 1180000], "DOLPHIN Active": [1320000, 1430000]}}, {"sido": "전북", "sigungu": "부안군", "rates": {"ATTO3 Plus": [1260000, 1360000], "SEALION7 RWD": [1520000, 1650000], "SEALION7 Plus": [1520000, 1650000], "SEAL RWD 스탠다드": [1690000, 1830000], "SEAL Plus RWD": [1690000, 1830000], "SEAL Dynamic AWD": [1510000, 1640000], "DOLPHIN": [1090000, 1180000], "DOLPHIN Active": [1320000, 1430000]}}, {"sido": "전남", "sigungu": "목포", "rates": {"ATTO3 Plus": [1260000, 1500000], "SEALION7 RWD": [1520000, 1500000], "SEALION7 Plus": [1520000, 1500000], "SEAL RWD 스탠다드": [1690000, 1500000], "SEAL Plus RWD": [1690000, 1500000], "SEAL Dynamic AWD": [1510000, 1500000], "DOLPHIN": [1090000, 1500000], "DOLPHIN Active": [1320000, 1500000]}}, {"sido": "전남", "sigungu": "여수", "rates": {"ATTO3 Plus": [1260000, 1500000], "SEALION7 RWD": [1520000, 1500000], "SEALION7 Plus": [1520000, 1500000], "SEAL RWD 스탠다드": [1690000, 1500000], "SEAL Plus RWD": [1690000, 1500000], "SEAL Dynamic AWD": [1510000, 1500000], "DOLPHIN": [1090000, 1500000], "DOLPHIN Active": [1320000, 1500000]}}, {"sido": "전남", "sigungu": "순천", "rates": {"ATTO3 Plus": [1260000, 1500000], "SEALION7 RWD": [1520000, 1500000], "SEALION7 Plus": [1520000, 1500000], "SEAL RWD 스탠다드": [1690000, 1500000], "SEAL Plus RWD": [1690000, 1500000], "SEAL Dynamic AWD": [1510000, 1500000], "DOLPHIN": [1090000, 1500000], "DOLPHIN Active": [1320000, 1500000]}}, {"sido": "전남", "sigungu": "나주", "rates": {"ATTO3 Plus": [1260000, 1500000], "SEALION7 RWD": [1520000, 1520000], "SEALION7 Plus": [1520000, 1520000], "SEAL RWD 스탠다드": [1690000, 1690000], "SEAL Plus RWD": [1690000, 1690000], "SEAL Dynamic AWD": [1510000, 1510000], "DOLPHIN": [1090000, 1500000], "DOLPHIN Active": [1320000, 1500000]}}, {"sido": "전남", "sigungu": "광양", "rates": {"ATTO3 Plus": [1260000, 1500000], "SEALION7 RWD": [1520000, 1500000], "SEALION7 Plus": [1520000, 1500000], "SEAL RWD 스탠다드": [1690000, 1500000], "SEAL Plus RWD": [1690000, 1500000], "SEAL Dynamic AWD": [1510000, 1500000], "DOLPHIN": [1090000, 1500000], "DOLPHIN Active": [1320000, 1500000]}}, {"sido": "전남", "sigungu": "담양군", "rates": {"ATTO3 Plus": [1260000, 1680000], "SEALION7 RWD": [1520000, 2020000], "SEALION7 Plus": [1520000, 2020000], "SEAL RWD 스탠다드": [1690000, 2250000], "SEAL Plus RWD": [1690000, 2250000], "SEAL Dynamic AWD": [1510000, 2010000], "DOLPHIN": [1090000, 1450000], "DOLPHIN Active": [1320000, 1760000]}}, {"sido": "전남", "sigungu": "곡성군", "rates": {"ATTO3 Plus": [1260000, 1260000], "SEALION7 RWD": [1520000, 1520000], "SEALION7 Plus": [1520000, 1520000], "SEAL RWD 스탠다드": [1690000, 1690000], "SEAL Plus RWD": [1690000, 1690000], "SEAL Dynamic AWD": [1510000, 1510000], "DOLPHIN": [1090000, 1090000], "DOLPHIN Active": [1320000, 1320000]}}, {"sido": "전남", "sigungu": "구례군", "rates": {"ATTO3 Plus": [1260000, 1620000], "SEALION7 RWD": [1520000, 1960000], "SEALION7 Plus": [1520000, 1960000], "SEAL RWD 스탠다드": [1690000, 2180000], "SEAL Plus RWD": [1690000, 2180000], "SEAL Dynamic AWD": [1510000, 1950000], "DOLPHIN": [1090000, 1400000], "DOLPHIN Active": [1320000, 1700000]}}, {"sido": "전남", "sigungu": "고흥군", "rates": {"ATTO3 Plus": [1260000, 1890000], "SEALION7 RWD": [1520000, 2280000], "SEALION7 Plus": [1520000, 2280000], "SEAL RWD 스탠다드": [1690000, 2530000], "SEAL Plus RWD": [1690000, 2530000], "SEAL Dynamic AWD": [1510000, 2260000], "DOLPHIN": [1090000, 1630000], "DOLPHIN Active": [1320000, 1980000]}}, {"sido": "전남", "sigungu": "보성군", "rates": {"ATTO3 Plus": [1260000, 1890000], "SEALION7 RWD": [1520000, 2280000], "SEALION7 Plus": [1520000, 2280000], "SEAL RWD 스탠다드": [1690000, 2530000], "SEAL Plus RWD": [1690000, 2530000], "SEAL Dynamic AWD": [1510000, 2260000], "DOLPHIN": [1090000, 1630000], "DOLPHIN Active": [1320000, 1980000]}}, {"sido": "전남", "sigungu": "화순군", "rates": {"ATTO3 Plus": [1260000, 1260000], "SEALION7 RWD": [1520000, 1520000], "SEALION7 Plus": [1520000, 1520000], "SEAL RWD 스탠다드": [1690000, 1690000], "SEAL Plus RWD": [1690000, 1690000], "SEAL Dynamic AWD": [1510000, 1510000], "DOLPHIN": [1090000, 1090000], "DOLPHIN Active": [1320000, 1320000]}}, {"sido": "전남", "sigungu": "장흥군", "rates": {"ATTO3 Plus": [1260000, 1680000], "SEALION7 RWD": [1520000, 2020000], "SEALION7 Plus": [1520000, 2020000], "SEAL RWD 스탠다드": [1690000, 2250000], "SEAL Plus RWD": [1690000, 2250000], "SEAL Dynamic AWD": [1510000, 2010000], "DOLPHIN": [1090000, 1450000], "DOLPHIN Active": [1320000, 1760000]}}, {"sido": "전남", "sigungu": "강진군", "rates": {"ATTO3 Plus": [1260000, 1680000], "SEALION7 RWD": [1520000, 2020000], "SEALION7 Plus": [1520000, 2020000], "SEAL RWD 스탠다드": [1690000, 2250000], "SEAL Plus RWD": [1690000, 2250000], "SEAL Dynamic AWD": [1510000, 2010000], "DOLPHIN": [1090000, 1450000], "DOLPHIN Active": [1320000, 1760000]}}, {"sido": "전남", "sigungu": "해남군", "rates": {"ATTO3 Plus": [1260000, 2760000], "SEALION7 RWD": [1520000, 3020000], "SEALION7 Plus": [1520000, 3020000], "SEAL RWD 스탠다드": [1690000, 3190000], "SEAL Plus RWD": [1690000, 3190000], "SEAL Dynamic AWD": [1510000, 3010000], "DOLPHIN": [1090000, 2590000], "DOLPHIN Active": [1320000, 2820000]}}, {"sido": "전남", "sigungu": "영암군", "rates": {"ATTO3 Plus": [1260000, 2380000], "SEALION7 RWD": [1520000, 2560000], "SEALION7 Plus": [1520000, 2560000], "SEAL RWD 스탠다드": [1690000, 2680000], "SEAL Plus RWD": [1690000, 2680000], "SEAL Dynamic AWD": [1510000, 2560000], "DOLPHIN": [1090000, 2260000], "DOLPHIN Active": [1320000, 2420000]}}, {"sido": "전남", "sigungu": "무안군", "rates": {"ATTO3 Plus": [1260000, 1260000], "SEALION7 RWD": [1520000, 1520000], "SEALION7 Plus": [1520000, 1520000], "SEAL RWD 스탠다드": [1690000, 1690000], "SEAL Plus RWD": [1690000, 1690000], "SEAL Dynamic AWD": [1510000, 1510000], "DOLPHIN": [1090000, 1090000], "DOLPHIN Active": [1320000, 1320000]}}, {"sido": "전남", "sigungu": "함평군", "rates": {"ATTO3 Plus": [1260000, 1470000], "SEALION7 RWD": [1520000, 1770000], "SEALION7 Plus": [1520000, 1770000], "SEAL RWD 스탠다드": [1690000, 1970000], "SEAL Plus RWD": [1690000, 1970000], "SEAL Dynamic AWD": [1510000, 1760000], "DOLPHIN": [1090000, 1270000], "DOLPHIN Active": [1320000, 1540000]}}, {"sido": "전남", "sigungu": "영광군", "rates": {"ATTO3 Plus": [1260000, 1510000], "SEALION7 RWD": [1520000, 1820000], "SEALION7 Plus": [1520000, 1820000], "SEAL RWD 스탠다드": [1690000, 2020000], "SEAL Plus RWD": [1690000, 2020000], "SEAL Dynamic AWD": [1510000, 1810000], "DOLPHIN": [1090000, 1500000], "DOLPHIN Active": [1320000, 1580000]}}, {"sido": "전남", "sigungu": "장성군", "rates": {"ATTO3 Plus": [1260000, 1500000], "SEALION7 RWD": [1520000, 1520000], "SEALION7 Plus": [1520000, 1520000], "SEAL RWD 스탠다드": [1690000, 1690000], "SEAL Plus RWD": [1690000, 1690000], "SEAL Dynamic AWD": [1510000, 1510000], "DOLPHIN": [1090000, 1500000], "DOLPHIN Active": [1320000, 1500000]}}, {"sido": "전남", "sigungu": "완도군", "rates": {"ATTO3 Plus": [1260000, 1890000], "SEALION7 RWD": [1520000, 2280000], "SEALION7 Plus": [1520000, 2280000], "SEAL RWD 스탠다드": [1690000, 2530000], "SEAL Plus RWD": [1690000, 2530000], "SEAL Dynamic AWD": [1510000, 2260000], "DOLPHIN": [1090000, 1630000], "DOLPHIN Active": [1320000, 1980000]}}, {"sido": "전남", "sigungu": "진도군", "rates": {"ATTO3 Plus": [1260000, 2760000], "SEALION7 RWD": [1520000, 3020000], "SEALION7 Plus": [1520000, 3020000], "SEAL RWD 스탠다드": [1690000, 3190000], "SEAL Plus RWD": [1690000, 3190000], "SEAL Dynamic AWD": [1510000, 3010000], "DOLPHIN": [1090000, 2590000], "DOLPHIN Active": [1320000, 2820000]}}, {"sido": "전남", "sigungu": "신안군", "rates": {"ATTO3 Plus": [1260000, 1260000], "SEALION7 RWD": [1520000, 1520000], "SEALION7 Plus": [1520000, 1520000], "SEAL RWD 스탠다드": [1690000, 1690000], "SEAL Plus RWD": [1690000, 1690000], "SEAL Dynamic AWD": [1510000, 1510000], "DOLPHIN": [1090000, 1090000], "DOLPHIN Active": [1320000, 1320000]}}, {"sido": "경북", "sigungu": "포항", "rates": {"ATTO3 Plus": [1260000, 1290000], "SEALION7 RWD": [1520000, 1560000], "SEALION7 Plus": [1520000, 1560000], "SEAL RWD 스탠다드": [1690000, 1740000], "SEAL Plus RWD": [1690000, 1740000], "SEAL Dynamic AWD": [1510000, 1550000], "DOLPHIN": [1090000, 1120000], "DOLPHIN Active": [1320000, 1350000]}}, {"sido": "경북", "sigungu": "경주", "rates": {"ATTO3 Plus": [1260000, 1290000], "SEALION7 RWD": [1520000, 1560000], "SEALION7 Plus": [1520000, 1560000], "SEAL RWD 스탠다드": [1690000, 1740000], "SEAL Plus RWD": [1690000, 1740000], "SEAL Dynamic AWD": [1510000, 1550000], "DOLPHIN": [1090000, 1120000], "DOLPHIN Active": [1320000, 1350000]}}, {"sido": "경북", "sigungu": "김천", "rates": {"ATTO3 Plus": [1260000, 1290000], "SEALION7 RWD": [1520000, 1560000], "SEALION7 Plus": [1520000, 1560000], "SEAL RWD 스탠다드": [1690000, 1740000], "SEAL Plus RWD": [1690000, 1740000], "SEAL Dynamic AWD": [1510000, 1550000], "DOLPHIN": [1090000, 1120000], "DOLPHIN Active": [1320000, 1350000]}}, {"sido": "경북", "sigungu": "안동", "rates": {"ATTO3 Plus": [1260000, 1290000], "SEALION7 RWD": [1520000, 1560000], "SEALION7 Plus": [1520000, 1560000], "SEAL RWD 스탠다드": [1690000, 1740000], "SEAL Plus RWD": [1690000, 1740000], "SEAL Dynamic AWD": [1510000, 1550000], "DOLPHIN": [1090000, 1120000], "DOLPHIN Active": [1320000, 1350000]}}, {"sido": "경북", "sigungu": "구미", "rates": {"ATTO3 Plus": [1260000, 1290000], "SEALION7 RWD": [1520000, 1560000], "SEALION7 Plus": [1520000, 1560000], "SEAL RWD 스탠다드": [1690000, 1740000], "SEAL Plus RWD": [1690000, 1740000], "SEAL Dynamic AWD": [1510000, 1550000], "DOLPHIN": [1090000, 1120000], "DOLPHIN Active": [1320000, 1350000]}}, {"sido": "경북", "sigungu": "영주", "rates": {"ATTO3 Plus": [1260000, 1290000], "SEALION7 RWD": [1520000, 1560000], "SEALION7 Plus": [1520000, 1560000], "SEAL RWD 스탠다드": [1690000, 1740000], "SEAL Plus RWD": [1690000, 1740000], "SEAL Dynamic AWD": [1510000, 1550000], "DOLPHIN": [1090000, 1120000], "DOLPHIN Active": [1320000, 1350000]}}, {"sido": "경북", "sigungu": "영천", "rates": {"ATTO3 Plus": [1260000, 1290000], "SEALION7 RWD": [1520000, 1560000], "SEALION7 Plus": [1520000, 1560000], "SEAL RWD 스탠다드": [1690000, 1740000], "SEAL Plus RWD": [1690000, 1740000], "SEAL Dynamic AWD": [1510000, 1550000], "DOLPHIN": [1090000, 1120000], "DOLPHIN Active": [1320000, 1350000]}}, {"sido": "경북", "sigungu": "상주", "rates": {"ATTO3 Plus": [1260000, 1290000], "SEALION7 RWD": [1520000, 1560000], "SEALION7 Plus": [1520000, 1560000], "SEAL RWD 스탠다드": [1690000, 1740000], "SEAL Plus RWD": [1690000, 1740000], "SEAL Dynamic AWD": [1510000, 1550000], "DOLPHIN": [1090000, 1120000], "DOLPHIN Active": [1320000, 1350000]}}, {"sido": "경북", "sigungu": "문경", "rates": {"ATTO3 Plus": [1260000, 1290000], "SEALION7 RWD": [1520000, 1560000], "SEALION7 Plus": [1520000, 1560000], "SEAL RWD 스탠다드": [1690000, 1740000], "SEAL Plus RWD": [1690000, 1740000], "SEAL Dynamic AWD": [1510000, 1550000], "DOLPHIN": [1090000, 1120000], "DOLPHIN Active": [1320000, 1350000]}}, {"sido": "경북", "sigungu": "경산", "rates": {"ATTO3 Plus": [1260000, 1290000], "SEALION7 RWD": [1520000, 1560000], "SEALION7 Plus": [1520000, 1560000], "SEAL RWD 스탠다드": [1690000, 1740000], "SEAL Plus RWD": [1690000, 1740000], "SEAL Dynamic AWD": [1510000, 1550000], "DOLPHIN": [1090000, 1120000], "DOLPHIN Active": [1320000, 1350000]}}, {"sido": "경북", "sigungu": "의성군", "rates": {"ATTO3 Plus": [1260000, 1290000], "SEALION7 RWD": [1520000, 1560000], "SEALION7 Plus": [1520000, 1560000], "SEAL RWD 스탠다드": [1690000, 1740000], "SEAL Plus RWD": [1690000, 1740000], "SEAL Dynamic AWD": [1510000, 1550000], "DOLPHIN": [1090000, 1120000], "DOLPHIN Active": [1320000, 1350000]}}, {"sido": "경북", "sigungu": "청송군", "rates": {"ATTO3 Plus": [1260000, 1290000], "SEALION7 RWD": [1520000, 1560000], "SEALION7 Plus": [1520000, 1560000], "SEAL RWD 스탠다드": [1690000, 1740000], "SEAL Plus RWD": [1690000, 1740000], "SEAL Dynamic AWD": [1510000, 1550000], "DOLPHIN": [1090000, 1120000], "DOLPHIN Active": [1320000, 1350000]}}, {"sido": "경북", "sigungu": "영양군", "rates": {"ATTO3 Plus": [1260000, 1290000], "SEALION7 RWD": [1520000, 1560000], "SEALION7 Plus": [1520000, 1560000], "SEAL RWD 스탠다드": [1690000, 1740000], "SEAL Plus RWD": [1690000, 1740000], "SEAL Dynamic AWD": [1510000, 1550000], "DOLPHIN": [1090000, 1120000], "DOLPHIN Active": [1320000, 1350000]}}, {"sido": "경북", "sigungu": "영덕군", "rates": {"ATTO3 Plus": [1260000, 1290000], "SEALION7 RWD": [1520000, 1560000], "SEALION7 Plus": [1520000, 1560000], "SEAL RWD 스탠다드": [1690000, 1740000], "SEAL Plus RWD": [1690000, 1740000], "SEAL Dynamic AWD": [1510000, 1550000], "DOLPHIN": [1090000, 1120000], "DOLPHIN Active": [1320000, 1350000]}}, {"sido": "경북", "sigungu": "청도군", "rates": {"ATTO3 Plus": [1260000, 1290000], "SEALION7 RWD": [1520000, 1560000], "SEALION7 Plus": [1520000, 1560000], "SEAL RWD 스탠다드": [1690000, 1740000], "SEAL Plus RWD": [1690000, 1740000], "SEAL Dynamic AWD": [1510000, 1550000], "DOLPHIN": [1090000, 1120000], "DOLPHIN Active": [1320000, 1350000]}}, {"sido": "경북", "sigungu": "고령군", "rates": {"ATTO3 Plus": [1260000, 1290000], "SEALION7 RWD": [1520000, 1560000], "SEALION7 Plus": [1520000, 1560000], "SEAL RWD 스탠다드": [1690000, 1740000], "SEAL Plus RWD": [1690000, 1740000], "SEAL Dynamic AWD": [1510000, 1550000], "DOLPHIN": [1090000, 1120000], "DOLPHIN Active": [1320000, 1350000]}}, {"sido": "경북", "sigungu": "성주군", "rates": {"ATTO3 Plus": [1260000, 1290000], "SEALION7 RWD": [1520000, 1560000], "SEALION7 Plus": [1520000, 1560000], "SEAL RWD 스탠다드": [1690000, 1740000], "SEAL Plus RWD": [1690000, 1740000], "SEAL Dynamic AWD": [1510000, 1550000], "DOLPHIN": [1090000, 1120000], "DOLPHIN Active": [1320000, 1350000]}}, {"sido": "경북", "sigungu": "칠곡군", "rates": {"ATTO3 Plus": [1260000, 1290000], "SEALION7 RWD": [1520000, 1560000], "SEALION7 Plus": [1520000, 1560000], "SEAL RWD 스탠다드": [1690000, 1740000], "SEAL Plus RWD": [1690000, 1740000], "SEAL Dynamic AWD": [1510000, 1550000], "DOLPHIN": [1090000, 1120000], "DOLPHIN Active": [1320000, 1350000]}}, {"sido": "경북", "sigungu": "예천군", "rates": {"ATTO3 Plus": [1260000, 1290000], "SEALION7 RWD": [1520000, 1560000], "SEALION7 Plus": [1520000, 1560000], "SEAL RWD 스탠다드": [1690000, 1740000], "SEAL Plus RWD": [1690000, 1740000], "SEAL Dynamic AWD": [1510000, 1550000], "DOLPHIN": [1090000, 1120000], "DOLPHIN Active": [1320000, 1350000]}}, {"sido": "경북", "sigungu": "봉화군", "rates": {"ATTO3 Plus": [1260000, 1290000], "SEALION7 RWD": [1520000, 1560000], "SEALION7 Plus": [1520000, 1560000], "SEAL RWD 스탠다드": [1690000, 1740000], "SEAL Plus RWD": [1690000, 1740000], "SEAL Dynamic AWD": [1510000, 1550000], "DOLPHIN": [1090000, 1120000], "DOLPHIN Active": [1320000, 1350000]}}, {"sido": "경북", "sigungu": "울진군", "rates": {"ATTO3 Plus": [1260000, 1290000], "SEALION7 RWD": [1520000, 1560000], "SEALION7 Plus": [1520000, 1560000], "SEAL RWD 스탠다드": [1690000, 1740000], "SEAL Plus RWD": [1690000, 1740000], "SEAL Dynamic AWD": [1510000, 1550000], "DOLPHIN": [1090000, 1120000], "DOLPHIN Active": [1320000, 1350000]}}, {"sido": "경북", "sigungu": "울릉군", "rates": {"ATTO3 Plus": [1260000, 2380000], "SEALION7 RWD": [1520000, 2870000], "SEALION7 Plus": [1520000, 2870000], "SEAL RWD 스탠다드": [1690000, 3190000], "SEAL Plus RWD": [1690000, 3190000], "SEAL Dynamic AWD": [1510000, 2850000], "DOLPHIN": [1090000, 2060000], "DOLPHIN Active": [1320000, 2490000]}}, {"sido": "경남", "sigungu": "창원", "rates": {"ATTO3 Plus": [1260000, 380000], "SEALION7 RWD": [1520000, 460000], "SEALION7 Plus": [1520000, 460000], "SEAL RWD 스탠다드": [1690000, 510000], "SEAL Plus RWD": [1690000, 510000], "SEAL Dynamic AWD": [1510000, 460000], "DOLPHIN": [1090000, 330000], "DOLPHIN Active": [1320000, 400000]}}, {"sido": "경남", "sigungu": "진주", "rates": {"ATTO3 Plus": [1260000, 380000], "SEALION7 RWD": [1520000, 460000], "SEALION7 Plus": [1520000, 460000], "SEAL RWD 스탠다드": [1690000, 510000], "SEAL Plus RWD": [1690000, 510000], "SEAL Dynamic AWD": [1510000, 460000], "DOLPHIN": [1090000, 330000], "DOLPHIN Active": [1320000, 400000]}}, {"sido": "경남", "sigungu": "통영", "rates": {"ATTO3 Plus": [1260000, 1200000], "SEALION7 RWD": [1520000, 1440000], "SEALION7 Plus": [1520000, 1440000], "SEAL RWD 스탠다드": [1690000, 1610000], "SEAL Plus RWD": [1690000, 1610000], "SEAL Dynamic AWD": [1510000, 1430000], "DOLPHIN": [1090000, 1040000], "DOLPHIN Active": [1320000, 1250000]}}, {"sido": "경남", "sigungu": "사천", "rates": {"ATTO3 Plus": [1260000, 450000], "SEALION7 RWD": [1520000, 540000], "SEALION7 Plus": [1520000, 540000], "SEAL RWD 스탠다드": [1690000, 600000], "SEAL Plus RWD": [1690000, 600000], "SEAL Dynamic AWD": [1510000, 530000], "DOLPHIN": [1090000, 390000], "DOLPHIN Active": [1320000, 470000]}}, {"sido": "경남", "sigungu": "김해", "rates": {"ATTO3 Plus": [1260000, 380000], "SEALION7 RWD": [1520000, 460000], "SEALION7 Plus": [1520000, 460000], "SEAL RWD 스탠다드": [1690000, 510000], "SEAL Plus RWD": [1690000, 510000], "SEAL Dynamic AWD": [1510000, 460000], "DOLPHIN": [1090000, 330000], "DOLPHIN Active": [1320000, 400000]}}, {"sido": "경남", "sigungu": "밀양", "rates": {"ATTO3 Plus": [1260000, 520000], "SEALION7 RWD": [1520000, 600000], "SEALION7 Plus": [1520000, 600000], "SEAL RWD 스탠다드": [1690000, 680000], "SEAL Plus RWD": [1690000, 680000], "SEAL Dynamic AWD": [1510000, 600000], "DOLPHIN": [1090000, 440000], "DOLPHIN Active": [1320000, 520000]}}, {"sido": "경남", "sigungu": "거제", "rates": {"ATTO3 Plus": [1260000, 450000], "SEALION7 RWD": [1520000, 540000], "SEALION7 Plus": [1520000, 540000], "SEAL RWD 스탠다드": [1690000, 600000], "SEAL Plus RWD": [1690000, 600000], "SEAL Dynamic AWD": [1510000, 530000], "DOLPHIN": [1090000, 390000], "DOLPHIN Active": [1320000, 470000]}}, {"sido": "경남", "sigungu": "양산", "rates": {"ATTO3 Plus": [1260000, 380000], "SEALION7 RWD": [1520000, 460000], "SEALION7 Plus": [1520000, 460000], "SEAL RWD 스탠다드": [1690000, 510000], "SEAL Plus RWD": [1690000, 510000], "SEAL Dynamic AWD": [1510000, 450000], "DOLPHIN": [1090000, 330000], "DOLPHIN Active": [1320000, 400000]}}, {"sido": "경남", "sigungu": "의령군", "rates": {"ATTO3 Plus": [1260000, 380000], "SEALION7 RWD": [1520000, 460000], "SEALION7 Plus": [1520000, 460000], "SEAL RWD 스탠다드": [1690000, 510000], "SEAL Plus RWD": [1690000, 510000], "SEAL Dynamic AWD": [1510000, 460000], "DOLPHIN": [1090000, 330000], "DOLPHIN Active": [1320000, 400000]}}, {"sido": "경남", "sigungu": "함안군", "rates": {"ATTO3 Plus": [1260000, 380000], "SEALION7 RWD": [1520000, 460000], "SEALION7 Plus": [1520000, 460000], "SEAL RWD 스탠다드": [1690000, 510000], "SEAL Plus RWD": [1690000, 510000], "SEAL Dynamic AWD": [1510000, 460000], "DOLPHIN": [1090000, 330000], "DOLPHIN Active": [1320000, 400000]}}, {"sido": "경남", "sigungu": "창녕군", "rates": {"ATTO3 Plus": [1260000, 910000], "SEALION7 RWD": [1520000, 1050000], "SEALION7 Plus": [1520000, 1050000], "SEAL RWD 스탠다드": [1690000, 1190000], "SEAL Plus RWD": [1690000, 1190000], "SEAL Dynamic AWD": [1510000, 1050000], "DOLPHIN": [1090000, 770000], "DOLPHIN Active": [1320000, 910000]}}, {"sido": "경남", "sigungu": "고성군", "rates": {"ATTO3 Plus": [1260000, 380000], "SEALION7 RWD": [1520000, 460000], "SEALION7 Plus": [1520000, 460000], "SEAL RWD 스탠다드": [1690000, 510000], "SEAL Plus RWD": [1690000, 510000], "SEAL Dynamic AWD": [1510000, 460000], "DOLPHIN": [1090000, 330000], "DOLPHIN Active": [1320000, 400000]}}, {"sido": "경남", "sigungu": "남해군", "rates": {"ATTO3 Plus": [1260000, 380000], "SEALION7 RWD": [1520000, 460000], "SEALION7 Plus": [1520000, 460000], "SEAL RWD 스탠다드": [1690000, 510000], "SEAL Plus RWD": [1690000, 510000], "SEAL Dynamic AWD": [1510000, 460000], "DOLPHIN": [1090000, 330000], "DOLPHIN Active": [1320000, 400000]}}, {"sido": "경남", "sigungu": "하동군", "rates": {"ATTO3 Plus": [1260000, 380000], "SEALION7 RWD": [1520000, 460000], "SEALION7 Plus": [1520000, 460000], "SEAL RWD 스탠다드": [1690000, 510000], "SEAL Plus RWD": [1690000, 510000], "SEAL Dynamic AWD": [1510000, 460000], "DOLPHIN": [1090000, 330000], "DOLPHIN Active": [1320000, 400000]}}, {"sido": "경남", "sigungu": "산청군", "rates": {"ATTO3 Plus": [1260000, 380000], "SEALION7 RWD": [1520000, 460000], "SEALION7 Plus": [1520000, 460000], "SEAL RWD 스탠다드": [1690000, 510000], "SEAL Plus RWD": [1690000, 510000], "SEAL Dynamic AWD": [1510000, 460000], "DOLPHIN": [1090000, 330000], "DOLPHIN Active": [1320000, 400000]}}, {"sido": "경남", "sigungu": "함양군", "rates": {"ATTO3 Plus": [1260000, 480000], "SEALION7 RWD": [1520000, 580000], "SEALION7 Plus": [1520000, 580000], "SEAL RWD 스탠다드": [1690000, 640000], "SEAL Plus RWD": [1690000, 640000], "SEAL Dynamic AWD": [1510000, 570000], "DOLPHIN": [1090000, 420000], "DOLPHIN Active": [1320000, 500000]}}, {"sido": "경남", "sigungu": "거창군", "rates": {"ATTO3 Plus": [1260000, 790000], "SEALION7 RWD": [1520000, 940000], "SEALION7 Plus": [1520000, 940000], "SEAL RWD 스탠다드": [1690000, 1050000], "SEAL Plus RWD": [1690000, 1050000], "SEAL Dynamic AWD": [1510000, 940000], "DOLPHIN": [1090000, 680000], "DOLPHIN Active": [1320000, 820000]}}, {"sido": "경남", "sigungu": "합천군", "rates": {"ATTO3 Plus": [1260000, 1540000], "SEALION7 RWD": [1520000, 1850000], "SEALION7 Plus": [1520000, 1850000], "SEAL RWD 스탠다드": [1690000, 2060000], "SEAL Plus RWD": [1690000, 2060000], "SEAL Dynamic AWD": [1510000, 1840000], "DOLPHIN": [1090000, 1330000], "DOLPHIN Active": [1320000, 1610000]}}, {"sido": "제주", "sigungu": "제주특별자치도", "rates": {"ATTO3 Plus": [1260000, 870000], "SEALION7 RWD": [1520000, 1050000], "SEALION7 Plus": [1520000, 1050000], "SEAL RWD 스탠다드": [1690000, 1160000], "SEAL Plus RWD": [1690000, 1160000], "SEAL Dynamic AWD": [1510000, 1040000], "DOLPHIN": [1090000, 750000], "DOLPHIN Active": [1320000, 910000]}}]};
+
+  const VEHICLES = EMBEDDED_DATA.vehicles;
+  const SUBSIDIES = EMBEDDED_DATA.subsidies;
+
+  let quoteType = "ev"; // "ev" | "phev"
+  let selectedModel = "SEALION7";
+  let selectedTrim = "SEALION7 Plus";
+  let selectedColor = "Aurora White / Black";
+  let selectedSido = "경기";
+  let selectedSigungu = "용인";
+  let manualTaxOverride = false;
+  let manualBondOverride = false;
+  let manualBasePriceOverride = false;
+  let applySubsidyDiscount = true;
+  let applyEvTaxReduction = true;
+
+  function parseNum(str) {
+    if (typeof str === "number") return isNaN(str) ? 0 : str;
+    const cleaned = String(str || "").replace(/[^0-9-]/g, "");
+    return parseInt(cleaned, 10) || 0;
+  }
+
+  function fmt(num) {
+    return Math.round(num || 0).toLocaleString("ko-KR");
+  }
+
+  function formatAndRecalc(el) {
+    const raw = el.value.replace(/[^0-9]/g, "");
+    const val = parseInt(raw, 10) || 0;
+    el.value = val.toLocaleString("ko-KR");
+    recalculateAll();
+  }
+
+  // 엑셀 FORECAST.LINEAR({159090,458180,731810,1266360,1457270,1584540}, {24500000,29200000,33500000,41900000,44900000,46900000}) 동일 구현
+  function forecastLinearEvTax(x) {
+    const ys = [159090, 458180, 731810, 1266360, 1457270, 1584540];
+    const xs = [24500000, 29200000, 33500000, 41900000, 44900000, 46900000];
+    const n = xs.length;
+    const meanX = xs.reduce((a, b) => a + b, 0) / n;
+    const meanY = ys.reduce((a, b) => a + b, 0) / n;
+    let num = 0;
+    let den = 0;
+    for (let i = 0; i < n; i++) {
+      num += (xs[i] - meanX) * (ys[i] - meanY);
+      den += (xs[i] - meanX) * (xs[i] - meanX);
+    }
+    const slope = num / den;
+    const intercept = meanY - slope * meanX;
+    const pred = intercept + slope * x;
+    return Math.max(0, Math.round(pred / 10) * 10);
+  }
+
+  function getVehicleObj(trimName) {
+    return VEHICLES.find((v) => v.trim === trimName) || VEHICLES[0];
+  }
+
+  function getFilteredVehicles() {
+    if (quoteType === "phev") {
+      return VEHICLES.filter((v) => v.model === "SEALION6");
+    }
+    return VEHICLES.filter((v) => v.model !== "SEALION6");
+  }
+
+  function setQuoteType(type) {
+    quoteType = type;
+    manualTaxOverride = false;
+    manualBondOverride = false;
+
+    const isPhev = type === "phev";
+    document.getElementById("btnTypeEv").className = "quote-type-btn" + (!isPhev ? " active-ev" : "");
+    document.getElementById("btnTypePhev").className = "quote-type-btn" + (isPhev ? " active-phev" : "");
+
+    document.getElementById("headerTypeBadge").textContent = isPhev ? "PHEV" : "EV 할인";
+    document.getElementById("step1Badge").className = "step-badge" + (isPhev ? " phev-step" : "");
+    document.getElementById("step2Badge").className = "step-badge" + (isPhev ? " phev-step" : "");
+    document.getElementById("step3Badge").className = "step-badge" + (isPhev ? " phev-step" : "");
+
+    document.getElementById("step2Title").textContent = isPhev
+      ? "PHEV 세제·다자녀·면세 혜택 적용"
+      : "등록기준지역 및 보조금 할인";
+
+    document.getElementById("evSubsidySection").style.display = isPhev ? "none" : "block";
+    document.getElementById("phevBenefitSection").style.display = isPhev ? "block" : "none";
+
+    document.getElementById("quoteSheet").className = "quote-sheet" + (isPhev ? " phev-sheet" : "");
+    document.getElementById("qsTypePill").textContent = isPhev
+      ? "PHEV 견적서 · SEALION6"
+      : "할인 견적서 · 전기차";
+
+    const list = getFilteredVehicles();
+    if (!list.some((v) => v.model === selectedModel)) {
+      selectedModel = list[0].model;
+      selectedTrim = list[0].trim;
+      selectedColor = list[0].colors[0] || "";
+    }
+
+    syncTrimDefaults(getVehicleObj(selectedTrim));
+    renderVehicleSelectors();
+    if (!isPhev) {
+      applyRegionSubsidy();
+    }
+    recalculateAll();
+  }
+
+  function syncTrimDefaults(vehObj) {
+    if (!manualBasePriceOverride) {
+      document.getElementById("basePriceInput").value = fmt(vehObj.price);
+    }
+    if (quoteType === "ev") {
+      applySubsidyDiscount = !vehObj.noSubsidy;
+      applyEvTaxReduction = !vehObj.noEvTaxReduction;
+      updateEligibilityUi();
+    }
+  }
+
+  function updateEligibilityUi() {
+    const subBtn = document.getElementById("toggleSubsidyBtn");
+    const subIcon = document.getElementById("toggleSubsidyIcon");
+    const subText = document.getElementById("toggleSubsidyText");
+
+    const taxBtn = document.getElementById("toggleTaxBtn");
+    const taxIcon = document.getElementById("toggleTaxIcon");
+    const taxText = document.getElementById("toggleTaxText");
+
+    if (applySubsidyDiscount) {
+      subBtn.className = "toggle-pill active-on";
+      subIcon.textContent = "●";
+      subText.textContent = "보조금 할인 적용";
+    } else {
+      subBtn.className = "toggle-pill active-off";
+      subIcon.textContent = "✕";
+      subText.textContent = "보조금 할인 미적용 (0원)";
+    }
+
+    if (applyEvTaxReduction) {
+      taxBtn.className = "toggle-pill active-on";
+      taxIcon.textContent = "●";
+      taxText.textContent = "전기차 취득세 감면 적용";
+    } else {
+      taxBtn.className = "toggle-pill active-off";
+      taxIcon.textContent = "✕";
+      taxText.textContent = "전기차 취득세 감면 미적용 (일반 7%)";
+    }
+
+    const notice = document.getElementById("evEligibilityNotice");
+    const msgs = [];
+    if (!applySubsidyDiscount) msgs.push("보조금 할인이 미적용(0원) 처리됩니다.");
+    if (!applyEvTaxReduction) msgs.push("전기차 취득세 감면 없이 일반 7% 세율로 계산됩니다.");
+    if (msgs.length > 0) {
+      notice.textContent = "안내: " + msgs.join(" ");
+      notice.className = "warning-banner visible";
+    } else {
+      notice.className = "warning-banner";
+    }
+  }
+
+  function toggleSubsidyEligible() {
+    applySubsidyDiscount = !applySubsidyDiscount;
+    updateEligibilityUi();
+    applyRegionSubsidy();
+    recalculateAll();
+  }
+
+  function toggleEvTaxEligible() {
+    applyEvTaxReduction = !applyEvTaxReduction;
+    manualTaxOverride = false;
+    updateEligibilityUi();
+    recalculateAll();
+  }
+
+  function onManualBasePriceInput(el) {
+    manualBasePriceOverride = true;
+    formatAndRecalc(el);
+  }
+
+  function renderVehicleSelectors() {
+    const list = getFilteredVehicles();
+    const isPhev = quoteType === "phev";
+    const models = [...new Set(list.map((v) => v.model))];
+
+    // Model chips
+    const modelChipsEl = document.getElementById("modelChips");
+    modelChipsEl.innerHTML = "";
+    models.forEach((m) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      const isAct = m === selectedModel;
+      btn.className = "chip-btn" + (isAct ? " active" : "") + (isAct && isPhev ? " phev-active" : "");
+      btn.textContent = m;
+      btn.onclick = () => {
+        selectedModel = m;
+        const defaultTrim =
+          (m === "SEALION7" && list.find((v) => v.trim === "SEALION7 Plus")) ||
+          (m === "SEAL" && list.find((v) => v.trim === "SEAL Plus RWD")) ||
+          list.find((v) => v.model === m);
+        selectedTrim = defaultTrim.trim;
+        selectedColor = defaultTrim.colors[0] || "";
+        const firstTrim = defaultTrim;
+        manualTaxOverride = false;
+        manualBondOverride = false;
+        manualBasePriceOverride = false;
+        syncTrimDefaults(firstTrim);
+        renderVehicleSelectors();
+        if (!isPhev) applyRegionSubsidy();
+        recalculateAll();
+      };
+      modelChipsEl.appendChild(btn);
+    });
+
+    // Trim cards
+    const trims = list.filter((v) => v.model === selectedModel);
+    if (!trims.some((t) => t.trim === selectedTrim)) {
+      selectedTrim = trims[0].trim;
+      selectedColor = trims[0].colors[0] || "";
+    }
+
+    const trimGridEl = document.getElementById("trimGrid");
+    trimGridEl.innerHTML = "";
+    trims.forEach((t) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      const isAct = t.trim === selectedTrim;
+      btn.className = "trim-card" + (isAct ? " active" : "") + (isAct && isPhev ? " phev-active" : "");
+      btn.onclick = () => {
+        selectedTrim = t.trim;
+        if (!t.colors.includes(selectedColor)) {
+          selectedColor = t.colors[0] || "";
+        }
+        manualTaxOverride = false;
+        manualBondOverride = false;
+        manualBasePriceOverride = false;
+        syncTrimDefaults(t);
+        renderVehicleSelectors();
+        if (!isPhev) applyRegionSubsidy();
+        recalculateAll();
+      };
+      btn.innerHTML = `
+        <span class="tr-name">${t.trim}</span>
+        <span class="tr-price">${fmt(t.price)} 원</span>
+        <span class="tr-mini-spec">${t.battery} · ${t.range}</span>
+      `;
+      trimGridEl.appendChild(btn);
+    });
+
+    // Color select
+    const curVeh = getVehicleObj(selectedTrim);
+    const colorSel = document.getElementById("colorSelect");
+    colorSel.innerHTML = "";
+    curVeh.colors.forEach((c) => {
+      const opt = document.createElement("option");
+      opt.value = c;
+      opt.textContent = c;
+      if (c === selectedColor) opt.selected = true;
+      colorSel.appendChild(opt);
+    });
+  }
+
+  function onColorChange(val) {
+    selectedColor = val;
+    recalculateAll();
+  }
+
+  /* --- Region & Subsidy --- */
+  function initRegionSelectors() {
+    const sidos = [...new Set(SUBSIDIES.map((s) => s.sido))];
+    const sidoSel = document.getElementById("sidoSelect");
+    sidoSel.innerHTML = "";
+    sidos.forEach((s) => {
+      const opt = document.createElement("option");
+      opt.value = s;
+      opt.textContent = s;
+      if (s === selectedSido) opt.selected = true;
+      sidoSel.appendChild(opt);
+    });
+    populateSigungu();
+  }
+
+  function populateSigungu() {
+    const items = SUBSIDIES.filter((s) => s.sido === selectedSido);
+    const sigunguSel = document.getElementById("sigunguSelect");
+    sigunguSel.innerHTML = "";
+    if (!items.some((i) => i.sigungu === selectedSigungu)) {
+      selectedSigungu = items[0] ? items[0].sigungu : "";
+    }
+    items.forEach((item) => {
+      const opt = document.createElement("option");
+      opt.value = item.sigungu;
+      opt.textContent = item.sigungu;
+      if (item.sigungu === selectedSigungu) opt.selected = true;
+      sigunguSel.appendChild(opt);
+    });
+  }
+
+  function onSidoChange() {
+    selectedSido = document.getElementById("sidoSelect").value;
+    populateSigungu();
+    applyRegionSubsidy();
+    recalculateAll();
+  }
+
+  function onSigunguChange() {
+    selectedSigungu = document.getElementById("sigunguSelect").value;
+    applyRegionSubsidy();
+    recalculateAll();
+  }
+
+  function onRegionQuickSearch(keyword) {
+    const q = keyword.trim().replace(/시$/, "");
+    if (!q) return;
+    const match = SUBSIDIES.find(
+      (s) => s.sigungu.includes(q) || (s.sido + " " + s.sigungu).includes(q)
+    );
+    if (match) {
+      selectedSido = match.sido;
+      selectedSigungu = match.sigungu;
+      document.getElementById("sidoSelect").value = selectedSido;
+      populateSigungu();
+      document.getElementById("sigunguSelect").value = selectedSigungu;
+      applyRegionSubsidy();
+      recalculateAll();
+    }
+  }
+
+  function applyRegionSubsidy() {
+    if (!applySubsidyDiscount) {
+      document.getElementById("natSubInput").value = "0";
+      document.getElementById("locSubInput").value = "0";
+      return;
+    }
+    const entry = SUBSIDIES.find(
+      (s) => s.sido === selectedSido && s.sigungu === selectedSigungu
+    );
+    let nat = 0;
+    let loc = 0;
+    if (entry && entry.rates[selectedTrim]) {
+      nat = entry.rates[selectedTrim][0];
+      loc = entry.rates[selectedTrim][1];
+    }
+    document.getElementById("natSubInput").value = fmt(nat);
+    document.getElementById("locSubInput").value = fmt(loc);
+  }
+
+  function onManualSubsidyInput() {
+    const natEl = document.getElementById("natSubInput");
+    const locEl = document.getElementById("locSubInput");
+    natEl.value = fmt(parseNum(natEl.value));
+    locEl.value = fmt(parseNum(locEl.value));
+    recalculateAll();
+  }
+
+  function onManualTaxInput(el) {
+    manualTaxOverride = true;
+    formatAndRecalc(el);
+  }
+
+  function onManualBondInput(el) {
+    manualBondOverride = true;
+    formatAndRecalc(el);
+  }
+
+  function recalculateAll() {
+    const veh = getVehicleObj(selectedTrim);
+    const basePrice = parseNum(document.getElementById("basePriceInput").value) || veh.price;
+    const isPhev = quoteType === "phev";
+
+    // Date
+    const now = new Date();
+    const yyyy = now.getFullYear();
+    const mm = String(now.getMonth() + 1).padStart(2, "0");
+    const dd = String(now.getDate()).padStart(2, "0");
+    document.getElementById("qsDate").textContent = `${yyyy}-${mm}-${dd}`;
+
+    // Customer & Region info
+    const customer = document.getElementById("customerNameInput").value.trim() || "VIP 고객님";
+    document.getElementById("qsCustomer").textContent = customer;
+    document.getElementById("qsRegion").textContent = isPhev
+      ? "해당 없음 (PHEV)"
+      : `${selectedSido} ${selectedSigungu}`;
+
+    // Vehicle summary
+    document.getElementById("qsVehName").textContent = `${veh.model} · ${veh.trim}`;
+    document.getElementById("qsVehColor").textContent = `색상: ${selectedColor}`;
+    document.getElementById("qsVehSpecs").textContent =
+      `배터리 ${veh.battery} · 주행거리 ${veh.range} · 제원 ${veh.dim}`;
+
+    const bondRatePct = parseFloat(document.getElementById("bondRateInput").value) || 0;
+    const bondRate = bondRatePct / 100;
+    const etcReg = parseNum(document.getElementById("etcRegInput").value);
+    const delivery = parseNum(document.getElementById("deliveryInput").value);
+    const deposit = parseNum(document.getElementById("depositInput").value);
+
+    let discountTotal = 0;
+    let netCarPrice = basePrice;
+    let acqTax = 0;
+    let bondCost = 0;
+
+    if (!isPhev) {
+      // 할인 견적서 (EV)
+      const natSub = parseNum(document.getElementById("natSubInput").value);
+      const locSub = parseNum(document.getElementById("locSubInput").value);
+      const subSum = natSub + locSub;
+      document.getElementById("subTotalPreview").textContent = `${fmt(subSum)} 원`;
+
+      const extraDisc = parseNum(document.getElementById("evExtraDiscountInput").value);
+      discountTotal = subSum + extraDisc;
+      netCarPrice = Math.max(0, basePrice - discountTotal);
+
+      // 취득세 계산: 감면 적용 시 기존 FORECAST.LINEAR 수식, 미적용 시 일반 7% 수식 ROUND((결제차량가/1.1)*0.07, -1)
+      if (!manualTaxOverride) {
+        if (applyEvTaxReduction) {
+          acqTax = forecastLinearEvTax(netCarPrice);
+        } else {
+          acqTax = Math.max(0, Math.round(((netCarPrice / 1.1) * 0.07) / 10) * 10);
+        }
+        document.getElementById("acqTaxInput").value = fmt(acqTax);
+      } else {
+        acqTax = parseNum(document.getElementById("acqTaxInput").value);
+      }
+
+      // 기존 할인 견적서 공채 수식: IF(OR(C11="SEAL",C11="DOLPHIN"),ROUND(MAX((((F15/1.1)*0.12)-2500000)*H26,0),-1),0)
+      if (!manualBondOverride) {
+        if (veh.model === "SEAL" || veh.model === "DOLPHIN") {
+          const rawBond = (((basePrice / 1.1) * 0.12) - 2500000) * bondRate;
+          bondCost = Math.max(0, Math.round(rawBond / 10) * 10);
+        } else {
+          bondCost = 0;
+        }
+        document.getElementById("bondCostInput").value = fmt(bondCost);
+      } else {
+        bondCost = parseNum(document.getElementById("bondCostInput").value);
+      }
+
+      if (applyEvTaxReduction) {
+        document.getElementById("taxLabel").textContent = "취득세 (7%, 전기차 감면)";
+        document.getElementById("qsTaxLineLabel").textContent = "취득세 (7%, 전기차 감면)";
+        document.getElementById("qsTaxNoteLine").textContent =
+          "* 전기차 취득세는 감면 혜택(최대 140만원)이 적용된 기준 산출액입니다.";
+      } else {
+        document.getElementById("taxLabel").textContent = "취득세 (7%, 감면 미적용)";
+        document.getElementById("qsTaxLineLabel").textContent = "취득세 (7%, 감면 미적용)";
+        document.getElementById("qsTaxNoteLine").textContent =
+          "* 선택한 트림 또는 조건에 따라 전기차 취득세 감면 및 보조금 할인이 미적용된 기준 산출액입니다.";
+      }
+
+      document.getElementById("qsDiscountLabel1").textContent = applySubsidyDiscount
+        ? "할인금액 (보조금 대체)"
+        : "할인금액 (보조금 미적용)";
+      document.getElementById("qsDiscountVal1").textContent = `- ${fmt(subSum)} 원`;
+      if (extraDisc > 0) {
+        document.getElementById("qsDiscountRow2").style.display = "flex";
+        document.getElementById("qsDiscountLabel2").textContent = "추가 프로모션 할인";
+        document.getElementById("qsDiscountVal2").textContent = `- ${fmt(extraDisc)} 원`;
+      } else {
+        document.getElementById("qsDiscountRow2").style.display = "none";
+      }
+    } else {
+      // PHEV 견적서 (SEALION6)
+      const multiChild = parseNum(document.getElementById("phevMultiChildInput").value);
+      const taxFreeDisc = parseNum(document.getElementById("phevTaxFreeInput").value);
+
+      discountTotal = taxFreeDisc;
+      netCarPrice = Math.max(0, basePrice - taxFreeDisc);
+
+      // 기존 PHEV 견적서 취득세 수식: ROUND((E14/1.1)*0.07,-1)-E16
+      if (!manualTaxOverride) {
+        const baseTax = Math.round(((basePrice / 1.1) * 0.07) / 10) * 10;
+        acqTax = Math.max(0, baseTax - multiChild);
+        document.getElementById("acqTaxInput").value = fmt(acqTax);
+      } else {
+        acqTax = parseNum(document.getElementById("acqTaxInput").value);
+      }
+
+      // 기존 PHEV 견적서 공채 수식: IF(OR(B10="SEAL",B10="DOLPHIN",B10="SEALION6"),ROUND(MAX((((E14/1.1)*0.12)-1400000)*G24,0),-1),0)
+      if (!manualBondOverride) {
+        const rawBond = (((basePrice / 1.1) * 0.12) - 1400000) * bondRate;
+        bondCost = Math.max(0, Math.round(rawBond / 10) * 10);
+        document.getElementById("bondCostInput").value = fmt(bondCost);
+      } else {
+        bondCost = parseNum(document.getElementById("bondCostInput").value);
+      }
+
+      document.getElementById("taxLabel").textContent = "취득세 (7%, 다자녀 혜택 차감)";
+      document.getElementById("qsTaxLineLabel").textContent = "취득세 (7%)";
+      document.getElementById("qsTaxNoteLine").textContent =
+        "* PHEV(SEALION6) 취득세는 공급가액 기준 7% 및 다자녀 감면 반영 산출액입니다.";
+
+      document.getElementById("qsDiscountLabel1").textContent = "면세 / 프로모션 할인";
+      document.getElementById("qsDiscountVal1").textContent = `- ${fmt(taxFreeDisc)} 원`;
+      if (multiChild > 0) {
+        document.getElementById("qsDiscountRow2").style.display = "flex";
+        document.getElementById("qsDiscountLabel2").textContent = "다자녀 취득세 혜택 (취득세 반영)";
+        document.getElementById("qsDiscountVal2").textContent = `- ${fmt(multiChild)} 원`;
+      } else {
+        document.getElementById("qsDiscountRow2").style.display = "none";
+      }
+    }
+
+    const sideCostTotal = acqTax + etcReg + delivery + bondCost;
+    const grandTotal = netCarPrice + sideCostTotal;
+    const sideSeparate = sideCostTotal - deposit;
+    const remainCar = grandTotal - sideSeparate - deposit; // equals netCarPrice
+
+    // Update Quote Sheet Numbers
+    document.getElementById("qsGrandTotal").textContent = fmt(grandTotal);
+    document.getElementById("qsPayableCar").textContent = `${fmt(netCarPrice)} 원`;
+    document.getElementById("qsSideCostTotal").textContent = `${fmt(sideCostTotal)} 원`;
+    document.getElementById("qsBalanceDue").textContent = `${fmt(remainCar)} 원`;
+
+    document.getElementById("qsBasePrice").textContent = `${fmt(basePrice)} 원`;
+    document.getElementById("qsNetCarPrice").textContent = `${fmt(netCarPrice)} 원`;
+
+    document.getElementById("qsTaxVal").textContent = `${fmt(acqTax)} 원`;
+    document.getElementById("qsEtcVal").textContent = `${fmt(etcReg)} 원`;
+    document.getElementById("qsDelivVal").textContent = `${fmt(delivery)} 원`;
+    document.getElementById("qsBondVal").textContent = `${fmt(bondCost)} 원`;
+    document.getElementById("qsSideSumVal").textContent = `${fmt(sideCostTotal)} 원`;
+
+    document.getElementById("qsDepositVal").textContent = `${fmt(deposit)} 원`;
+    document.getElementById("qsSideSepVal").textContent = `${fmt(sideSeparate)} 원`;
+    document.getElementById("qsRemainCarVal").textContent = `${fmt(remainCar)} 원`;
+  }
+
+  function resetAll() {
+    manualTaxOverride = false;
+    manualBondOverride = false;
+    manualBasePriceOverride = false;
+    applySubsidyDiscount = true;
+    applyEvTaxReduction = true;
+    document.getElementById("customerNameInput").value = "VIP 고객님";
+    document.getElementById("depositInput").value = "500,000";
+    document.getElementById("bondRateInput").value = "0";
+    document.getElementById("etcRegInput").value = "66,900";
+    document.getElementById("deliveryInput").value = "72,600";
+    document.getElementById("evExtraDiscountInput").value = "0";
+    document.getElementById("phevMultiChildInput").value = "0";
+    document.getElementById("phevTaxFreeInput").value = "0";
+    document.getElementById("regionSearchInput").value = "";
+
+    selectedSido = "경기";
+    selectedSigungu = "용인";
+    initRegionSelectors();
+
+    selectedModel = "SEALION7";
+    selectedTrim = "SEALION7 Plus";
+    selectedColor = "Aurora White / Black";
+    setQuoteType("ev");
+  }
+
+  let lastGeneratedBlob = null;
+  let lastGeneratedFilename = "BYD_구매견적서.png";
+
+  async function saveQuoteAsImage() {
+    const sheetEl = document.getElementById("quoteSheet");
+    const topBtn = document.getElementById("saveImgBtn");
+    if (typeof html2canvas === "undefined") {
+      alert("이미지 변환 모듈을 불러오지 못했습니다. 인터넷 연결을 확인한 뒤 다시 시도해 주세요.");
+      return;
+    }
+
+    try {
+      if (topBtn) {
+        topBtn.disabled = true;
+        topBtn.textContent = "생성 중...";
+      }
+
+      const canvas = await html2canvas(sheetEl, {
+        scale: 2,
+        backgroundColor: "#ffffff",
+        useCORS: true,
+        logging: false
+      });
+
+      const dataUrl = canvas.toDataURL("image/png");
+      const customer = (document.getElementById("customerNameInput").value.trim() || "고객").replace(/[\/:*?"<>|]/g, "");
+      const trimSafe = selectedTrim.replace(/\s+/g, "_");
+      lastGeneratedFilename = `BYD견적서_${trimSafe}_${customer}.png`;
+
+      const imgEl = document.getElementById("generatedQuoteImg");
+      imgEl.src = dataUrl;
+
+      const dlLink = document.getElementById("downloadImgLink");
+      dlLink.href = dataUrl;
+      dlLink.download = lastGeneratedFilename;
+
+      canvas.toBlob((blob) => {
+        lastGeneratedBlob = blob;
+      }, "image/png");
+
+      document.getElementById("imgModal").className = "img-modal-backdrop no-print open";
+    } catch (err) {
+      alert("이미지 생성 중 오류가 발생했습니다: " + err.message);
+    } finally {
+      if (topBtn) {
+        topBtn.disabled = false;
+        topBtn.textContent = "사진 저장";
+      }
+    }
+  }
+
+  async function shareGeneratedImage() {
+    if (lastGeneratedBlob && navigator.canShare) {
+      try {
+        const file = new File([lastGeneratedBlob], lastGeneratedFilename, { type: "image/png" });
+        if (navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            files: [file],
+            title: "BYD 구매 견적서"
+          });
+          return;
+        }
+      } catch (e) {
+        if (e && e.name === "AbortError") return;
+      }
+    }
+    // Fallback: trigger download link
+    document.getElementById("downloadImgLink").click();
+  }
+
+  function closeImgModal() {
+    document.getElementById("imgModal").className = "img-modal-backdrop no-print";
+  }
+
+  function triggerPrintPdf() {
+    // Some iOS in-app browsers block window.print(); guide user if print dialog doesn't open
+    try {
+      window.focus();
+      window.print();
+    } catch (e) {
+      alert("현재 브라우저에서 인쇄가 제한되어 있습니다. 사파리(Safari)에서 열거나 '사진 저장' 버튼을 이용해 주세요.");
+    }
+  }
+
+  // Boot
+  initRegionSelectors();
+  setQuoteType("ev");
+</script>
+</body>
+</html>
