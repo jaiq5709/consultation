@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BYD 씰 제원 · 트림 비교</title>
+  <style>
+
+    :root {
+      --bg: #0f1115;
+      --surface: #181c23;
+      --surface-hover: #212733;
+      --border: #2a3140;
+      --text: #f3f5f8;
+      --muted: #9aa4b2;
+      --accent: #3b82f6;
+      --accent-soft: rgba(59, 130, 246, 0.14);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* 상단 네비게이션 */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(15, 17, 21, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+    .brand span {
+      font-weight: 400;
+      font-size: 0.85rem;
+      color: var(--muted);
+      letter-spacing: 0;
+      margin-left: 8px;
+    }
+    nav {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    nav a {
+      padding: 7px 13px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      transition: 0.18s;
+    }
+    nav a:hover, nav a.active {
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+    section { margin-bottom: 56px; }
+    .eyebrow {
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-size: clamp(1.35rem, 2.8vw, 1.75rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .sub {
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 26px 20px;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 18px;
+      transition: 0.18s;
+    }
+    .back-link:hover { color: var(--text); }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 28px;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 820px) {
+      .hero { grid-template-columns: 1fr; padding: 20px; }
+    }
+    .hero-img {
+      aspect-ratio: 16 / 10;
+      background: linear-gradient(135deg, #141923, #1e2636);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+    .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .badge {
+      display: inline-block;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-soft);
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+    .en-name { font-size: 0.8rem; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+    .cta-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .btn {
+      flex: 1;
+      min-width: 135px;
+      text-align: center;
+      padding: 11px 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: 0.18s;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { opacity: 0.9; }
+    .btn-sub { background: var(--surface-hover); border: 1px solid var(--border); }
+    .btn-sub:hover { border-color: var(--text); }
+
+    /* 섹션 바로가기 탭 */
+    .quick-nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .quick-nav a {
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      font-size: 0.86rem;
+      color: var(--muted);
+      transition: 0.18s;
+    }
+    .quick-nav a:hover { border-color: var(--accent); color: var(--text); }
+
+    /* KPI 카드 */
+    .basis-label { font-size: 0.82rem; color: var(--muted); margin-bottom: 12px; }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+    }
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+    }
+    .kpi-card span { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 6px; }
+    .kpi-card strong { font-size: 1.25rem; }
+
+    /* 특징 카드 3종 */
+    .highlight-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .highlight-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+    }
+    .hl-num {
+      display: inline-block;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.06em;
+    }
+    .highlight-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
+    .highlight-card p { font-size: 0.9rem; color: var(--muted); }
+
+    /* 차체 크기 */
+    .dim-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+    .dim-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      text-align: center;
+    }
+    .dim-card span { display: block; font-size: 0.8rem; color: var(--muted); margin-bottom: 6px; }
+    .dim-card strong { font-size: 1.25rem; }
+
+    /* 제원 비교 표 */
+    .table-wrap {
+      margin-top: 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 520px;
+      font-size: 0.92rem;
+    }
+    th, td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    thead th {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--text);
+      font-weight: 700;
+    }
+    tbody th {
+      color: var(--muted);
+      font-weight: 500;
+      width: 34%;
+    }
+    tbody tr:first-child td {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    tbody tr:last-child th, tbody tr:last-child td { border-bottom: none; }
+
+    .notice {
+      margin-top: 16px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* 다른 모델 비교 */
+    .other-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+    .other-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: 0.18s;
+    }
+    .other-card:hover {
+      border-color: var(--accent);
+      background: var(--surface-hover);
+      transform: translateY(-2px);
+    }
+    .other-card span { display: block; font-size: 0.76rem; color: var(--muted); }
+    .other-card strong { font-size: 1.02rem; }
+    .other-arrow { color: var(--accent); font-weight: 700; }
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-wrap">
+      <a class="brand" href="index.html">BYD <span>차량 안내 · 계산기 허브</span></a>
+      <nav aria-label="주 메뉴">
+        <a href="index.html">전체 모델</a>
+        <a href="quote.html">견적서</a>
+        <a href="installment.html">삼성카드 할부</a>
+        <a href="charging.html">충전비 계산</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <a class="back-link" href="index.html">← 전체 모델 목록으로 돌아가기</a>
+
+    <section class="hero">
+      <div class="hero-img">
+        <img src="assets/seal.webp" alt="BYD SEAL 공식 이미지" onerror="this.style.display='none'" />
+      </div>
+      <div>
+        <span class="badge">전기 세단</span>
+        <p class="en-name">BYD SEAL</p>
+        <h1>낮고 유려하게,<br>드라이빙을 선명하게.</h1>
+        <p class="sub">후륜구동과 사륜구동을 비교할 수 있는 퍼포먼스 전기 세단입니다.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="quote.html">견적서 계산하기</a>
+          <a class="btn btn-sub" href="installment.html">삼성카드 할부 계산</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="quick-nav">
+      <a href="#overview">주요 정보 ↓</a>
+      <a href="#features">디자인 · 특징 ↓</a>
+      <a href="#dimensions">차체 크기 ↓</a>
+      <a href="#specs">트림별 제원 · 가격 ↓</a>
+    </div>
+
+    <section id="overview">
+      <p class="basis-label">SEAL 기본 · Plus 기준</p>
+      <div class="kpi-grid">
+        <div class="kpi-card"><span>복합 주행거리</span><strong>449 km</strong></div>
+        <div class="kpi-card"><span>배터리 용량</span><strong>82.56 kWh</strong></div>
+        <div class="kpi-card"><span>휠베이스</span><strong>2,920 mm</strong></div>
+        <div class="kpi-card"><span>공식 시작가</span><strong>3,990만원~</strong></div>
+      </div>
+    </section>
+
+    <section id="features">
+      <p class="eyebrow">TAKE A CLOSER LOOK</p>
+      <h2>씰의 핵심 특징</h2>
+      <div class="highlight-grid">
+        <article class="highlight-card">
+          <span class="hl-num">01 / 디자인</span>
+          <h3>유선형 차체와 낮은 전고</h3>
+          <p>전고 1,460mm, 휠베이스 2,920mm의 매끄러운 비율로 공기저항을 줄이고 세단 특유의 안정감을 높였습니다.</p>
+        </article>
+        <article class="highlight-card">
+          <span class="hl-num">02 / 파워트레인</span>
+          <h3>RWD와 Dynamic AWD</h3>
+          <p>싱글모터 RWD는 230kW, 듀얼모터 AWD는 390kW 출력을 발휘해 주행 성향에 맞춰 선택할 수 있습니다.</p>
+        </article>
+        <article class="highlight-card">
+          <span class="hl-num">03 / 기술</span>
+          <h3>CTB 구조와 블레이드 배터리</h3>
+          <p>배터리를 차체 구조에 통합하는 CTB(Cell-to-Body) 기술과 82.56kWh 블레이드 배터리를 적용했습니다.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="dimensions">
+      <p class="eyebrow">SIZE &amp; SPACE</p>
+      <h2>차체 크기 및 실내 공간</h2>
+      <div class="dim-grid">
+        <div class="dim-card"><span>전장</span><strong>4,800 mm</strong></div>
+        <div class="dim-card"><span>전폭</span><strong>1,875 mm</strong></div>
+        <div class="dim-card"><span>전고</span><strong>1,460 mm</strong></div>
+        <div class="dim-card"><span>축거 (휠베이스)</span><strong>2,920 mm</strong></div>
+      </div>
+    </section>
+
+    <section id="specs">
+      <p class="eyebrow">SPECIFICATIONS</p>
+      <h2>트림별 제원과 공식 가격</h2>
+      <p class="sub">표가 화면보다 넓으면 좌우로 밀어서 비교할 수 있습니다.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>항목</th>
+              <th>SEAL</th><th>SEAL Plus</th><th>Dynamic AWD</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th>공식 판매 가격</th><td>3,990만원</td><td>4,190만원</td><td>4,690만원</td></tr>
+            <tr><th>구동 방식</th><td>후륜 RWD</td><td>후륜 RWD</td><td>사륜 AWD</td></tr>
+            <tr><th>배터리 용량 (kWh)</th><td>82.56</td><td>82.56</td><td>82.56</td></tr>
+            <tr><th>모터 최고 출력 (kW)</th><td>230</td><td>230</td><td>390</td></tr>
+            <tr><th>모터 최대 토크 (Nm)</th><td>360</td><td>360</td><td>670</td></tr>
+            <tr><th>1회 충전 복합 주행거리 (km)</th><td>449</td><td>449</td><td>407</td></tr>
+            <tr><th>복합 전비 (km/kWh)</th><td>4.7</td><td>4.7</td><td>4.2</td></tr>
+            <tr><th>최고속도 (km/h)</th><td>180</td><td>180</td><td>180</td></tr>
+            <tr><th>공차중량 (kg)</th><td>2,085</td><td>2,085</td><td>2,205</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="notice">
+        ※ 가격은 BYD Korea 공식 모델 페이지 확인 기준(2026.11.03)이며 보조금 및 프로모션 적용 전 금액입니다.<br />
+        ※ 주행거리와 에너지 소비 효율은 도로·기온·적재량·운전 방법에 따라 달라질 수 있습니다.
+      </p>
+    </section>
+
+    <section>
+      <p class="eyebrow">EXPLORE MORE</p>
+      <h2>다른 BYD 모델 비교하기</h2>
+      <div class="other-grid">
+        <a class="other-card" href="sealion7.html">
+          <div><span>전기 SUV</span><strong>씨라이언 7</strong></div>
+          <span class="other-arrow">↗</span>
+        </a>
+        <a class="other-card" href="sealion6.html">
+          <div><span>플러그인 하이브리드 SUV</span><strong>씨라이언 6 DM-i</strong></div>
+          <span class="other-arrow">↗</span>
+        </a>
+        <a class="other-card" href="dolphin.html">
+          <div><span>전기 해치백</span><strong>돌핀</strong></div>
+          <span class="other-arrow">↗</span>
+        </a>
+        <a class="other-card" href="atto3.html">
+          <div><span>전기 SUV</span><strong>아토 3</strong></div>
+          <span class="other-arrow">↗</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    BYD 차량 안내 및 스마트 계산기 허브 · 표시 가격 및 사양은 최신 공식 조건에 따라 변동될 수 있습니다.
+  </footer>
+</body>
+</html>
