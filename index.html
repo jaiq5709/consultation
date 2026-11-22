@@ -5,24 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BYD 모델 안내 · 스마트 계산기</title>
   <style>
+
     :root {
-      --bg: #0f1115;
-      --surface: #181c23;
-      --surface-hover: #212733;
-      --border: #2a3140;
-      --text: #f3f5f8;
-      --muted: #9aa4b2;
-      --accent: #3b82f6;
-      --accent-soft: rgba(59, 130, 246, 0.14);
+      --bg: #f6f8fb;
+      --surface: #ffffff;
+      --surface-soft: #f0f4f8;
+      --surface-hover: #f8fafc;
+      --border: #e2e8f0;
+      --text: #111827;
+      --muted: #5b6472;
+      --accent: #0066cc;
+      --accent-hover: #0052a3;
+      --accent-soft: #eaf3ff;
+      --shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
       --radius: 16px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.55;
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
     a { color: inherit; text-decoration: none; }
@@ -32,7 +37,7 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(15, 17, 21, 0.88);
+      background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
@@ -43,16 +48,17 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      gap: 12px;
       flex-wrap: wrap;
     }
     .brand {
       font-size: 1.15rem;
       font-weight: 800;
       letter-spacing: 0.08em;
+      color: var(--text);
     }
     .brand span {
-      font-weight: 400;
+      font-weight: 500;
       font-size: 0.85rem;
       color: var(--muted);
       letter-spacing: 0;
@@ -60,30 +66,30 @@
     }
     nav {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
     }
     nav a {
       padding: 7px 13px;
       border-radius: 999px;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
+      font-weight: 500;
       color: var(--muted);
-      transition: 0.2s;
+      transition: 0.18s;
     }
-    nav a:hover {
-      background: var(--surface);
-      color: var(--text);
+    nav a:hover, nav a.active {
+      background: var(--accent-soft);
+      color: var(--accent);
     }
 
-    /* 공통 컨테이너 */
     main {
       max-width: 1120px;
       margin: 0 auto;
-      padding: 36px 20px 80px;
+      padding: 32px 20px 80px;
     }
-    section { margin-bottom: 64px; }
+    section { margin-bottom: 56px; }
     .eyebrow {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 700;
       letter-spacing: 0.12em;
       color: var(--accent);
@@ -91,23 +97,34 @@
       margin-bottom: 8px;
     }
     h1 {
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-size: clamp(1.75rem, 4vw, 2.45rem);
       font-weight: 800;
       letter-spacing: -0.02em;
+      line-height: 1.25;
       margin-bottom: 12px;
+      color: var(--text);
     }
     h2 {
-      font-size: 1.55rem;
+      font-size: clamp(1.35rem, 2.8vw, 1.72rem);
       font-weight: 700;
       letter-spacing: -0.02em;
       margin-bottom: 8px;
+      color: var(--text);
     }
     .sub {
       color: var(--muted);
-      font-size: 0.98rem;
+      font-size: 0.96rem;
     }
 
-    /* 도구 허브 카드 */
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      padding: 26px 20px;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
     .tool-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -123,39 +140,29 @@
       flex-direction: column;
       justify-content: space-between;
       gap: 16px;
-      transition: transform 0.18s, border-color 0.18s, background 0.18s;
+      box-shadow: var(--shadow);
+      transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
     }
     .tool-card:hover {
       transform: translateY(-3px);
       border-color: var(--accent);
-      background: var(--surface-hover);
+      box-shadow: 0 10px 26px rgba(0, 102, 204, 0.1);
     }
     .tool-badge {
       display: inline-block;
       width: fit-content;
       font-size: 0.75rem;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--accent);
       background: var(--accent-soft);
       padding: 4px 10px;
       border-radius: 999px;
       margin-bottom: 10px;
     }
-    .tool-card h3 {
-      font-size: 1.15rem;
-      margin-bottom: 6px;
-    }
-    .tool-card p {
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
-    .tool-link {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--accent);
-    }
+    .tool-card h3 { font-size: 1.15rem; margin-bottom: 6px; color: var(--text); }
+    .tool-card p { font-size: 0.9rem; color: var(--muted); }
+    .tool-link { font-size: 0.9rem; font-weight: 700; color: var(--accent); }
 
-    /* 필터 버튼 */
     .filter-bar {
       display: flex;
       gap: 8px;
@@ -166,20 +173,19 @@
       border: 1px solid var(--border);
       background: var(--surface);
       color: var(--muted);
-      padding: 8px 14px;
+      padding: 8px 15px;
       border-radius: 999px;
       font-size: 0.88rem;
+      font-weight: 600;
       cursor: pointer;
       transition: 0.18s;
     }
-    .filter-btn.active,
-    .filter-btn:hover {
+    .filter-btn.active, .filter-btn:hover {
       background: var(--accent);
       border-color: var(--accent);
       color: #fff;
     }
 
-    /* 모델 카드 그리드 */
     .model-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -192,20 +198,29 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: transform 0.18s, border-color 0.18s;
+      box-shadow: var(--shadow);
+      transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
     }
     .model-card:hover {
       transform: translateY(-3px);
-      border-color: #4b5563;
+      border-color: var(--accent);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+    }
+    .card-link-area {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
     }
     .model-thumb {
       position: relative;
       aspect-ratio: 16 / 10;
-      background: #12151b;
+      background: linear-gradient(135deg, #eef2f7, #e2e8f0);
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      color: var(--muted);
+      font-size: 0.85rem;
     }
     .model-thumb img {
       width: 100%;
@@ -217,52 +232,38 @@
       position: absolute;
       top: 12px;
       left: 12px;
-      background: rgba(15, 17, 21, 0.82);
+      background: rgba(255, 255, 255, 0.92);
       border: 1px solid var(--border);
+      color: var(--text);
       font-size: 0.75rem;
+      font-weight: 600;
       padding: 4px 10px;
       border-radius: 999px;
     }
     .model-body {
-      padding: 20px;
+      padding: 20px 20px 14px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
       flex: 1;
     }
-    .model-en {
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-    }
-    .model-body h3 {
-      font-size: 1.25rem;
-    }
-    .model-desc {
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
+    .model-en { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; color: var(--muted); }
+    .model-body h3 { font-size: 1.25rem; color: var(--text); }
+    .model-desc { font-size: 0.9rem; color: var(--muted); }
     .spec-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
       padding: 12px 0;
       border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
       margin-top: auto;
     }
-    .spec-item span {
-      display: block;
-      font-size: 0.76rem;
-      color: var(--muted);
-    }
-    .spec-item strong {
-      font-size: 0.96rem;
-    }
+    .spec-item span { display: block; font-size: 0.76rem; color: var(--muted); }
+    .spec-item strong { font-size: 0.98rem; color: var(--text); }
     .model-actions {
       display: flex;
       gap: 8px;
-      margin-top: 4px;
+      padding: 0 20px 20px;
     }
     .btn-detail, .btn-quote {
       flex: 1;
@@ -274,37 +275,25 @@
       transition: 0.18s;
     }
     .btn-detail {
-      background: var(--surface-hover);
+      background: var(--surface-soft);
       border: 1px solid var(--border);
+      color: var(--text);
     }
-    .btn-detail:hover { border-color: var(--text); }
+    .btn-detail:hover { border-color: var(--accent); color: var(--accent); }
     .btn-quote {
       background: var(--accent);
       color: #fff;
     }
-    .btn-quote:hover { opacity: 0.9; }
-
-    .notice {
-      margin-top: 18px;
-      font-size: 0.82rem;
-      color: var(--muted);
-    }
-
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px 20px;
-      text-align: center;
-      font-size: 0.82rem;
-      color: var(--muted);
-    }
+    .btn-quote:hover { background: var(--accent-hover); }
+    .notice { margin-top: 18px; font-size: 0.82rem; color: var(--muted); }
   </style>
 </head>
 <body>
   <header>
     <div class="nav-wrap">
-      <a class="brand" href="#top">BYD <span>차량 안내 · 계산기 허브</span></a>
+      <a class="brand" href="index.html">BYD <span>차량 안내 · 계산기 허브</span></a>
       <nav aria-label="주 메뉴">
-        <a href="#tools">계산기 도구</a>
+        <a href="#tools" class="active">계산기 도구</a>
         <a href="#lineup">모델 안내</a>
         <a href="quote.html">견적서</a>
         <a href="installment.html">삼성카드 할부</a>
@@ -313,8 +302,7 @@
     </div>
   </header>
 
-  <main id="top">
-    <!-- 계산기 도구 허브 -->
+  <main>
     <section id="tools">
       <p class="eyebrow">SMART TOOLS</p>
       <h1>차량 비교부터 견적·할부까지 한 번에</h1>
@@ -350,11 +338,10 @@
       </div>
     </section>
 
-    <!-- 모델 라인업 -->
     <section id="lineup">
       <p class="eyebrow">BYD LINEUP</p>
       <h2>모델별 제원 및 가격 안내</h2>
-      <p class="sub">차량 유형을 선택해 주요 제원과 공식 가격을 비교해 보세요.</p>
+      <p class="sub">원하는 차량 카드를 선택하면 실내외 컬러와 트림별 상세 제원 페이지로 이동합니다.</p>
 
       <div class="filter-bar" role="group" aria-label="모델 유형 필터">
         <button class="filter-btn active" data-filter="all">전체 (5)</button>
@@ -365,108 +352,118 @@
 
       <div class="model-grid">
         <article class="model-card" data-category="ev-suv">
-          <div class="model-thumb">
-            <img src="assets/sealion7.webp" alt="BYD 씨라이언 7" onerror="this.style.display='none'" />
-            <span class="model-tag">전기 SUV</span>
-          </div>
-          <div class="model-body">
-            <span class="model-en">BYD SEALION 7</span>
-            <h3>씨라이언 7</h3>
-            <p class="model-desc">스포티한 디자인과 실용적인 공간을 갖춘 중형 전기 SUV</p>
-            <div class="spec-row">
-              <div class="spec-item"><span>복합 주행거리</span><strong>398 km</strong></div>
-              <div class="spec-item"><span>공식 가격</span><strong>4,490만원~</strong></div>
+          <a class="card-link-area" href="sealion7.html">
+            <div class="model-thumb">
+              <img src="assets/sealion7.webp" alt="BYD 씨라이언 7" onerror="this.style.display='none'" />
+              <span class="model-tag">전기 SUV</span>
             </div>
-            <div class="model-actions">
-              <a class="btn-detail" href="models/sealion7.html">모델 상세</a>
-              <a class="btn-quote" href="quote.html">견적 내기</a>
+            <div class="model-body">
+              <span class="model-en">BYD SEALION 7</span>
+              <h3>씨라이언 7</h3>
+              <p class="model-desc">스포티한 디자인과 실용적인 공간을 함께 살펴보세요.</p>
+              <div class="spec-row">
+                <div class="spec-item"><span>복합 주행거리</span><strong>398 km</strong></div>
+                <div class="spec-item"><span>공식 가격</span><strong>4,490만원부터</strong></div>
+              </div>
             </div>
+          </a>
+          <div class="model-actions">
+            <a class="btn-detail" href="sealion7.html">컬러 · 제원 보기</a>
+            <a class="btn-quote" href="quote.html">견적 내기</a>
           </div>
         </article>
 
         <article class="model-card" data-category="phev">
-          <div class="model-thumb">
-            <img src="assets/sealion6.webp" alt="BYD 씨라이언 6 DM-i" onerror="this.style.display='none'" />
-            <span class="model-tag">플러그인 하이브리드 SUV</span>
-          </div>
-          <div class="model-body">
-            <span class="model-en">BYD SEALION 6 DM-i</span>
-            <h3>씨라이언 6 DM-i</h3>
-            <p class="model-desc">EV 주행과 하이브리드 주행을 모두 지원하는 PHEV SUV</p>
-            <div class="spec-row">
-              <div class="spec-item"><span>EV 복합 주행</span><strong>70 km</strong></div>
-              <div class="spec-item"><span>공식 가격</span><strong>3,750만원~</strong></div>
+          <a class="card-link-area" href="sealion6.html">
+            <div class="model-thumb">
+              <img src="assets/sealion6.webp" alt="BYD 씨라이언 6 DM-i" onerror="this.style.display='none'" />
+              <span class="model-tag">플러그인 하이브리드 SUV</span>
             </div>
-            <div class="model-actions">
-              <a class="btn-detail" href="models/sealion6.html">모델 상세</a>
-              <a class="btn-quote" href="quote.html">견적 내기</a>
+            <div class="model-body">
+              <span class="model-en">BYD SEALION 6 DM-i</span>
+              <h3>씨라이언 6 DM-i</h3>
+              <p class="model-desc">EV 주행과 하이브리드 주행을 함께 고려하는 SUV입니다.</p>
+              <div class="spec-row">
+                <div class="spec-item"><span>EV 복합 주행</span><strong>70 km</strong></div>
+                <div class="spec-item"><span>공식 가격</span><strong>3,750만원부터</strong></div>
+              </div>
             </div>
+          </a>
+          <div class="model-actions">
+            <a class="btn-detail" href="sealion6.html">컬러 · 제원 보기</a>
+            <a class="btn-quote" href="quote.html">견적 내기</a>
           </div>
         </article>
 
         <article class="model-card" data-category="sedan-hatch">
-          <div class="model-thumb">
-            <img src="assets/dolphin.webp" alt="BYD 돌핀" onerror="this.style.display='none'" />
-            <span class="model-tag">전기 해치백</span>
-          </div>
-          <div class="model-body">
-            <span class="model-en">BYD DOLPHIN</span>
-            <h3>돌핀</h3>
-            <p class="model-desc">컴팩트한 차체 안에 실용성을 담은 도심형 전기 해치백</p>
-            <div class="spec-row">
-              <div class="spec-item"><span>복합 주행거리</span><strong>307 km</strong></div>
-              <div class="spec-item"><span>공식 가격</span><strong>2,450만원~</strong></div>
+          <a class="card-link-area" href="dolphin.html">
+            <div class="model-thumb">
+              <img src="assets/dolphin.webp" alt="BYD 돌핀" onerror="this.style.display='none'" />
+              <span class="model-tag">전기 해치백</span>
             </div>
-            <div class="model-actions">
-              <a class="btn-detail" href="models/dolphin.html">모델 상세</a>
-              <a class="btn-quote" href="quote.html">견적 내기</a>
+            <div class="model-body">
+              <span class="model-en">BYD DOLPHIN</span>
+              <h3>돌핀</h3>
+              <p class="model-desc">작은 차체 안에 실용성을 담은 전기 해치백입니다.</p>
+              <div class="spec-row">
+                <div class="spec-item"><span>복합 주행거리</span><strong>307 km</strong></div>
+                <div class="spec-item"><span>공식 가격</span><strong>2,450만원부터</strong></div>
+              </div>
             </div>
+          </a>
+          <div class="model-actions">
+            <a class="btn-detail" href="dolphin.html">컬러 · 제원 보기</a>
+            <a class="btn-quote" href="quote.html">견적 내기</a>
           </div>
         </article>
 
         <article class="model-card" data-category="ev-suv">
-          <div class="model-thumb">
-            <img src="assets/atto3.webp" alt="BYD 아토 3" onerror="this.style.display='none'" />
-            <span class="model-tag">전기 SUV</span>
-          </div>
-          <div class="model-body">
-            <span class="model-en">BYD ATTO 3</span>
-            <h3>아토 3</h3>
-            <p class="model-desc">도심 주행과 주말 이동을 균형 있게 소화하는 전기 SUV</p>
-            <div class="spec-row">
-              <div class="spec-item"><span>복합 주행거리</span><strong>321 km</strong></div>
-              <div class="spec-item"><span>공식 가격</span><strong>3,490만원~</strong></div>
+          <a class="card-link-area" href="atto3.html">
+            <div class="model-thumb">
+              <img src="assets/atto3.webp" alt="BYD 아토 3" onerror="this.style.display='none'" />
+              <span class="model-tag">전기 SUV</span>
             </div>
-            <div class="model-actions">
-              <a class="btn-detail" href="models/atto3.html">모델 상세</a>
-              <a class="btn-quote" href="quote.html">견적 내기</a>
+            <div class="model-body">
+              <span class="model-en">BYD ATTO 3</span>
+              <h3>아토 3</h3>
+              <p class="model-desc">도심과 주말의 이동을 함께 생각하는 전기 SUV입니다.</p>
+              <div class="spec-row">
+                <div class="spec-item"><span>복합 주행거리</span><strong>321 km</strong></div>
+                <div class="spec-item"><span>공식 가격</span><strong>3,490만원부터</strong></div>
+              </div>
             </div>
+          </a>
+          <div class="model-actions">
+            <a class="btn-detail" href="atto3.html">컬러 · 제원 보기</a>
+            <a class="btn-quote" href="quote.html">견적 내기</a>
           </div>
         </article>
 
         <article class="model-card" data-category="sedan-hatch">
-          <div class="model-thumb">
-            <img src="assets/seal.webp" alt="BYD 씰" onerror="this.style.display='none'" />
-            <span class="model-tag">전기 세단</span>
-          </div>
-          <div class="model-body">
-            <span class="model-en">BYD SEAL</span>
-            <h3>씰</h3>
-            <p class="model-desc">후륜구동과 사륜구동을 선택할 수 있는 퍼포먼스 전기 세단</p>
-            <div class="spec-row">
-              <div class="spec-item"><span>복합 주행거리</span><strong>449 km</strong></div>
-              <div class="spec-item"><span>공식 가격</span><strong>3,990만원~</strong></div>
+          <a class="card-link-area" href="seal.html">
+            <div class="model-thumb">
+              <img src="assets/seal.webp" alt="BYD 씰" onerror="this.style.display='none'" />
+              <span class="model-tag">전기 세단</span>
             </div>
-            <div class="model-actions">
-              <a class="btn-detail" href="models/seal.html">모델 상세</a>
-              <a class="btn-quote" href="quote.html">견적 내기</a>
+            <div class="model-body">
+              <span class="model-en">BYD SEAL</span>
+              <h3>씰</h3>
+              <p class="model-desc">후륜구동과 사륜구동을 비교할 수 있는 전기 세단입니다.</p>
+              <div class="spec-row">
+                <div class="spec-item"><span>복합 주행거리</span><strong>449 km</strong></div>
+                <div class="spec-item"><span>공식 가격</span><strong>3,990만원부터</strong></div>
+              </div>
             </div>
+          </a>
+          <div class="model-actions">
+            <a class="btn-detail" href="seal.html">컬러 · 제원 보기</a>
+            <a class="btn-quote" href="quote.html">견적 내기</a>
           </div>
         </article>
       </div>
 
       <p class="notice">
-        ※ 제원 및 공식 가격은 2026년 11월 국내 공식 모델 기준이며, 보조금 및 프로모션 적용 전 금액입니다.
+        ※ 제원·가격은 2026.11.03 국내 공식 모델 페이지 확인 기준이며 보조금·프로모션 적용 전 표시 금액입니다.
       </p>
     </section>
   </main>
@@ -478,15 +475,13 @@
   <script>
     const buttons = document.querySelectorAll(".filter-btn");
     const cards = document.querySelectorAll(".model-card");
-
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
         buttons.forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
         const filter = btn.dataset.filter;
         cards.forEach((card) => {
-          card.style.display =
-            filter === "all" || card.dataset.category === filter ? "flex" : "none";
+          card.style.display = (filter === "all" || card.dataset.category === filter) ? "flex" : "none";
         });
       });
     });
