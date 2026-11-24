@@ -864,6 +864,18 @@
       .quote-table tr.row-burgundy td {
         font-size: 14.5px !important;
       }
+
+      select.quote-meta-input {
+        appearance: none;
+        -webkit-appearance: none;
+        background: transparent;
+      }
+    }
+
+    body.capture-mode select.quote-meta-input {
+      appearance: none;
+      -webkit-appearance: none;
+      background: transparent;
     }
   </style>
 </head>
@@ -1044,8 +1056,14 @@
 
     <div class="quote-meta-grid">
       <div class="quote-meta-item">
-        <label class="quote-meta-label" for="quoteModelInput">차종 / 트림</label>
-        <input type="text" class="quote-meta-input" id="quoteModelInput" value="BYD DOLPHIN" />
+        <label class="quote-meta-label" for="quoteModelSelect">차종 선택</label>
+        <select class="quote-meta-input" id="quoteModelSelect">
+          <option value="DOLPHIN" selected>DOLPHIN</option>
+          <option value="ATTO3">ATTO3</option>
+          <option value="SEAL">SEAL</option>
+          <option value="SEALION7">SEALION7</option>
+          <option value="SEALION6">SEALION6</option>
+        </select>
       </div>
       <div class="quote-meta-item">
         <label class="quote-meta-label" for="quoteCustomerInput">고객명</label>
@@ -1347,8 +1365,8 @@
     document.getElementById("summaryHighlight").className = "summary-highlight" + (isDolphin ? " dolphin-highlight" : "");
     document.getElementById("selTotal").style.color = isDolphin ? "var(--dolphin)" : "var(--primary)";
 
-    if (isDolphin && document.getElementById("quoteModelInput").value.trim() === "") {
-      document.getElementById("quoteModelInput").value = "BYD DOLPHIN";
+    if (isDolphin) {
+      document.getElementById("quoteModelSelect").value = "DOLPHIN";
     }
 
     applyRateModeToTerms(getPrincipal());
