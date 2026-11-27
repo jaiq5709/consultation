@@ -252,6 +252,103 @@
       font-size: 0.82rem;
       color: var(--muted);
     }
+
+    /* 하단 보증 안내 섹션 (EV / DM-i 분리) */
+    .warranty-section {
+      margin-top: 48px;
+      margin-bottom: 16px;
+    }
+    .warranty-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-top: 16px;
+    }
+    .warranty-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .warranty-tabs {
+      display: inline-flex;
+      background: var(--surface-soft);
+      padding: 4px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+    }
+    .w-tab-btn {
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+    .w-tab-btn.active {
+      background: var(--surface);
+      color: var(--accent);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+    }
+    .w-table-wrap {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .w-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 540px;
+      font-size: 0.9rem;
+    }
+    .w-table th, .w-table td {
+      padding: 13px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .w-table thead th {
+      background: var(--surface-soft);
+      color: var(--text);
+      font-weight: 700;
+    }
+    .w-table tbody td:first-child {
+      color: var(--text);
+      font-weight: 600;
+      width: 62%;
+    }
+    .w-table tbody td:last-child {
+      color: var(--accent);
+      font-weight: 700;
+      width: 38%;
+    }
+    .w-table tbody tr:last-child td { border-bottom: none; }
+    .w-subnote {
+      display: block;
+      margin-top: 4px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    .w-foot-note {
+      margin-top: 14px;
+      padding: 14px 16px;
+      background: var(--surface-soft);
+      border-radius: 10px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .w-foot-note strong { color: var(--text); }
+
   </style>
 </head>
 <body>
@@ -397,6 +494,38 @@
     <p class="notice">
       ※ 제원·가격은 2026.11.03 국내 공식 모델 페이지 확인 기준이며 보조금·프로모션 적용 전 표시 금액입니다.
     </p>
+    <section id="warranty" class="warranty-section">
+      <p class="eyebrow">BYD WARRANTY CARE</p>
+      <div class="warranty-head">
+        <div>
+          <h2>보증 케어 안내 (EV · DM-i)</h2>
+          <p class="sub">차량 구분에 따라 보증 항목 및 보증 기간을 확인해 보세요.</p>
+        </div>
+        <div class="warranty-tabs" role="tablist" aria-label="보증 유형 선택">
+          <button type="button" class="w-tab-btn active" id="wTabEv" onclick="setWarrantyTab('ev')">EV (전기차)</button>
+          <button type="button" class="w-tab-btn" id="wTabDmi" onclick="setWarrantyTab('dmi')">DM-i (플러그인 하이브리드)</button>
+        </div>
+      </div>
+
+      <div class="warranty-card">
+        <div class="w-table-wrap">
+          <table class="w-table">
+            <thead>
+              <tr>
+                <th>보증 항목</th>
+                <th>보증 기간</th>
+              </tr>
+            </thead>
+            <tbody id="warrantyTableBody"></tbody>
+          </table>
+        </div>
+
+        <div class="w-foot-note">
+          <strong>긴급출동 · 무상 견인:</strong> 상기 보증사항과 함께 긴급출동 서비스 및 무상 견인 서비스가 <strong>6년 혹은 150,000km</strong>까지 제공됩니다.<br />
+          <strong>유의사항:</strong> 보증기간은 차량 인도일로부터 시작되며, 기간과 주행거리 중 먼저 도래하는 시점을 만료로 간주합니다. 보증기간 내 소유주가 변경되더라도 잔여 보증 기간은 차량에 귀속되며, 세부 사항은 보증서 및 BYD 공식 서비스센터 안내를 참고해 주세요.
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -416,6 +545,97 @@
         });
       });
     });
+  </script>
+  <script>
+    const WARRANTY_DATA = {
+      ev: [
+        {
+          item: "구동 배터리 (고전압 배터리)",
+          sub: "8년 혹은 160,000km 중 선도래 시점까지 SOH 70% 이상 유지 보증 (70% 미만 저하 시 보증 서비스 제공)",
+          period: "8년 혹은 160,000km (SOH 70% 이상)"
+        },
+        {
+          item: "구동 장치",
+          sub: "모터, 모터 컨트롤러, DC 어셈블리가 있는 모터 컨트롤러, 고전압 전기 제어 어셈블리",
+          period: "8년 혹은 150,000km"
+        },
+        {
+          item: "차체 및 일반 주요 부품 (녹·부식 및 시동배터리 포함)",
+          sub: "단, 아래 3년/6개월 항목 및 각종 오일·소모품·충전 장비·사은품·냉매 제외 (세부 사항 보증서 참조)",
+          period: "6년 혹은 150,000km"
+        },
+        {
+          item: "차량 전체 조명, 타이어 공기압 모니터링 모듈, 서스펜션, 볼 조인트",
+          sub: "",
+          period: "4년 혹은 100,000km"
+        },
+        {
+          item: "멀티미디어 시스템, 쇼크 업소버, 더스트 커버, 부싱 또는 가스켓, 휠 베어링, PM2.5 측정 장치, AC/DC 충전 포트 어셈블리, USB 충전 포트 커넥터",
+          sub: "",
+          period: "3년 혹은 60,000km"
+        },
+        {
+          item: "에어컨 필터(필터망·미립자 공기 필터·정전기 필터), 차량 키 배터리, 브레이크 패드, 타이어, 와이퍼 블레이드 어셈블리, 전구, 퓨즈, 일반 릴레이(통합 제어 장치 제외)",
+          sub: "",
+          period: "6개월 혹은 10,000km"
+        }
+      ],
+      dmi: [
+        {
+          item: "구동 배터리 (고전압 배터리)",
+          sub: "8년 혹은 160,000km 중 선도래 시점까지 SOH 70% 이상 유지 보증 (70% 미만 저하 시 보증 서비스 제공)",
+          period: "8년 혹은 160,000km (SOH 70% 이상)"
+        },
+        {
+          item: "구동 장치",
+          sub: "모터, 모터 컨트롤러, DC 어셈블리가 있는 모터 컨트롤러, 고전압 전기 제어 어셈블리",
+          period: "8년 혹은 150,000km"
+        },
+        {
+          item: "엔진 포함 차량 전체의 모든 부품 (녹·부식 포함)",
+          sub: "단, 아래 3년/6개월 항목 및 각종 오일·소모품·충전 장비·사은품·냉매 제외 (세부 사항 보증서 참조)",
+          period: "6년 혹은 150,000km"
+        },
+        {
+          item: "차량 전체 조명, 타이어 공기압 모니터링 모듈, 마운트(서포트), 볼 조인트",
+          sub: "",
+          period: "4년 혹은 100,000km"
+        },
+        {
+          item: "멀티미디어 시스템, 쇼크 업소버, 더스트 커버, 부싱 또는 가스켓, 릴리즈 베어링, 휠 베어링, PM2.5 측정 장치, AC/DC 충전 포트 어셈블리, USB 충전 포트 커넥터, 캐니스터 먼지 필터, 연료히터 어셈블리",
+          sub: "",
+          period: "3년 혹은 60,000km"
+        },
+        {
+          item: "흡기 에어크리너, 에어컨 필터(필터망·미립자 공기 필터·정전기 필터), 오일필터, 연료필터, 차량 키 배터리, 브레이크 패드, 클러치 디스크, 타이어, 와이퍼 블레이드 어셈블리, 전구, 점화 플러그, 퓨즈, 일반 릴레이(통합 제어 장치 제외)",
+          sub: "",
+          period: "6개월 혹은 10,000km"
+        }
+      ]
+    };
+
+    function setWarrantyTab(mode) {
+      const isEv = mode === "ev";
+      document.getElementById("wTabEv").classList.toggle("active", isEv);
+      document.getElementById("wTabDmi").classList.toggle("active", !isEv);
+
+      const rows = WARRANTY_DATA[mode] || WARRANTY_DATA.ev;
+      const tbody = document.getElementById("warrantyTableBody");
+      tbody.innerHTML = rows
+        .map(
+          (r) => `
+          <tr>
+            <td>
+              ${r.item}
+              ${r.sub ? `<span class="w-subnote">${r.sub}</span>` : ""}
+            </td>
+            <td>${r.period}</td>
+          </tr>`
+        )
+        .join("");
+    }
+
+    setWarrantyTab("ev");
   </script>
 </body>
 </html>
