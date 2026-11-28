@@ -899,7 +899,6 @@
         <span>① 카드할부 계산기</span>
         <span class="title-tag tag-blue" id="rateModeBadge">기본 금리</span>
       </div>
-      <button type="button" class="reset-btn" onclick="resetInstallment()">할부 초기화</button>
     </div>
 
     <div class="mode-switch">
@@ -920,17 +919,17 @@
     <div class="input-group">
       <div class="input-label">
         <span>할부금액 (할부원금)</span>
-        <span id="amountKorean" style="color: var(--primary); font-weight: 700;">2,000만원</span>
+        <span id="amountKorean" style="color: var(--primary); font-weight: 700;">1,000만원</span>
       </div>
       <div class="input-box">
-        <input type="text" id="principalInput" inputmode="numeric" value="20,000,000" oninput="onPrincipalInput(this)" />
+        <input type="text" id="principalInput" inputmode="numeric" value="10,000,000" oninput="onPrincipalInput(this)" />
         <span class="input-unit">원</span>
       </div>
       <div class="quick-amounts">
         <button type="button" class="quick-btn" onclick="addPrincipal(1000000)">+100만</button>
         <button type="button" class="quick-btn" onclick="addPrincipal(5000000)">+500만</button>
         <button type="button" class="quick-btn" onclick="addPrincipal(10000000)">+1,000만</button>
-        <button type="button" class="quick-btn" onclick="setPrincipal(20000000)">2,000만</button>
+        <button type="button" class="quick-btn" onclick="setPrincipal(0)">0원</button>
       </div>
     </div>
 
@@ -1192,7 +1191,7 @@
   let selectedIndex = 2;
 
   let latestQuoteData = {
-    principal: 20000000,
+    principal: 10000000,
     months: 36,
     rate: 4.7,
     monthly: 596728,
@@ -1437,7 +1436,7 @@
   function resetInstallment() {
     selectedIndex = 2;
     setRateMode("basic");
-    setPrincipal(20000000);
+    setPrincipal(10000000);
   }
 
   function recalculateInstallment(skipSelRateInput = false) {
